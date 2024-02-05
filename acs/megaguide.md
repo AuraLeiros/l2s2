@@ -23,6 +23,9 @@ Example of a form:
                 ...
             </optgroup>
     </fieldset>
+    <br> // Space
+    <input type="submit" value="Submit">
+</form>
 ~~~
 #### Select tag
 
