@@ -77,3 +77,13 @@ function saisie_fiable($tab, $str, $exp=""){
 ~~~
 
 1. C'est bon d'ajouter balises et faire des changements.
+
+2. Bon practique = balises avec des cas a cocher, combien de cases à cocher
+
+
+### Exercice 6.
+
+~~~
+
+
+~~~
