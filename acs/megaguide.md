@@ -27,6 +27,7 @@ Example of a form:
     <input type="submit" value="Submit">
 </form>
 ~~~
+
 #### Select tag
 
 We use the following open/closing tags `<select name=a_name id=an_id>` `</select>` with options in between
