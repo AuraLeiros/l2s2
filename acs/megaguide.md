@@ -56,3 +56,9 @@ Example of a POST request:
     - Potential danger if not well-defined as they can allow to modify data in the server
 
 
+### PHP
+
+#### Terniary operators
+
+They follow the structure `(boolean expression) ? value_true : value_false`\
+A return can't be at the `value_true` and  `value_false` level.
