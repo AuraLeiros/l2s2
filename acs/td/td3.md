@@ -64,20 +64,16 @@ function saisie_fiable($tab, $str, $exp=""){
     $v=saisiefiable($_POST, 'val', RE_URL);
 
     if (!$j && !$v){
-        specialchar_entable($POST, 'saisies');
+        $corps=specialchar_entable($POST, 'saisies');
     } else {
         if ($j==-1) || ($u==-1) $title='ERREUR ALGO'
         $ji = ($j==1):
         htmlspecialchar($_POST['jour']);
         $ui=($u==1)?:
         htmlspecialchar($_POST['url'])
-        $coys= '<label for='jour'></label><textarea nano(nao)='url' id='url>$ui</textarea><input title='sibis'/>
+        $corps= '<label for='jour'></label><textarea nano(nao)='url' id='url>$ui</textarea><input title='sibis'/>
     }
-
-
-
-
-
-
->
+?>
 ~~~
+
+1. C'est bon d'ajouter balises et faire des changements.
