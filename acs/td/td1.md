@@ -57,7 +57,7 @@ Content-type: text/html; charset=utf-8
 
 EOF
 
-NOTE: tthe code is partially correct, we need to use the $ to substitute for the given env variables
+NOTE: the code is partially correct, we need to use the $ to substitute for the given env variables
 ~~~
 
 As we can see, the first line of code "cat's" the following lines until the EOF is found (note: we can use any other tag) saving them into the var_style.html

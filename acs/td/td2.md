@@ -67,7 +67,7 @@ function tableau_en_table(array $idx, string $str){
 ~~~
 
 function tableau_en_liste($data, $type=ul){
-    if (!is_array($t)) {
+    if (!is_array($t)) {t, 
         return "$data"
     } else if (!$data) {
         return "";
