@@ -47,3 +47,22 @@ Biblio* charger_n_entrees(char* nomfic, int n){
     return maBiblio;
 
 }
+
+void enregistrer_biblio(Biblio *b, char* nomfic){
+
+
+    FILE *fptr = fopen(nomfic, "w");
+    Livre *curr = b->Livre;
+    int numLiv;
+    char titre[50];
+    char auteur[50];
+
+    while(curr != NULL){
+        
+
+
+
+
+
+    }
+}
