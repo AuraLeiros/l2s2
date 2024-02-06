@@ -107,3 +107,6 @@ La fonction f2 est pire puisqu'aucun chiffre de la clé n'est pas pris en compte
 La foncition f3 n'est pas géniale car elle multiplie les cles par un divisieur de la taille de la table, autrement dit, une case sur 2 de la table de háchage sera inutilise. 
 
 La fonction à utiliser est f4 car celle-ci de par sa multiplication par 8 tient comple de tous les chiffres de la clé.
+
+
+adel.nabli@sorbonne-universite.fr
