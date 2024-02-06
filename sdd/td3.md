@@ -75,3 +75,35 @@ for the linear probing, we start puting and thn doing hops every time we enconte
 
 
 
+To respond the question, we consider that in the lineaire 28 and the quadratique 22 (hops)
+
+Pour le probing linéaire, le nombre de tentatives d'insertion moyenne est 28/13 pour le probing quadriatique on a 22/13 du coup quadratique.
+
+complexite d'arbre (log(n))
+
+### Exo 3.
+
+#### 3.1
+
+The first 3 functions are linear.
+
+1. `Identity function`, it's going to return the key
+2. `10-times function`, returns 10 times the key
+3. `2-times function`, returns 2 times the key
+4. `Condition + Recursivity function`
+
+#### 3.2
+
+Le but c'est d'avoir le minimum de collision et que la table soit uniformement rempli.
+
+f1 > f2
+
+f3 2 est un diviseur de 10 donc on va avoir la moitie de cases 
+
+La meilleur choix est f4. En effet, si on utilise f1, la fonction de hachage est f1=x mod 10. Par consequent la fonction ne tient compte que les dernieres chiffres de la lé. ce n'est donc pas une bonne function puisque elle ne donera pas tous les infos de la clé.
+
+La fonction f2 est pire puisqu'aucun chiffre de la clé n'est pas pris en compte (on obtient 0 pour tout le monde)
+
+La foncition f3 n'est pas géniale car elle multiplie les cles par un divisieur de la taille de la table, autrement dit, une case sur 2 de la table de háchage sera inutilise. 
+
+La fonction à utiliser est f4 car celle-ci de par sa multiplication par 8 tient comple de tous les chiffres de la clé.
