@@ -2,6 +2,7 @@
 /* aura.leiros@etu.sorbonne-universite.fr */
 /* biblioLC.c - TP3 & TP4 SDD */
 
+#include <stdio.h>
 #include "biblioLC.h"
 
 Livre* creer_livre(int num, char* titre, char* auteur){
@@ -60,3 +61,4 @@ void inserer_en_tete(Biblio b*, int num, char* titre, char* auteur){
     temp->suiv = b->livre;
     b->livre = temp;
 }
+
