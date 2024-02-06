@@ -55,6 +55,23 @@ In every base, if we have an operation that is `number % base` we will get the l
 
 `n % (b^0) + (n - (n % b^0)) % b^1 + ...`
 
+ #### Exo 2.2
+
+ On rapelle que le probing h(k,i) consiste à inserer d'abord en h(k,0) puis en cas d'échéc en h(k,1) puis h(k,2) ...
+
+ Dans le table suivante 
+
+ - " x->y" se traduit par "x suivi de y dans la liste chaînée.
+
+ -" Cx => Cy" represente l'operation tentative de placement de l'élement en case Cx puis tentarive en case Cy (probing)
+
+premier mot -> cas 14 (E = 14 decimal)
+deuxieme mot -> cas 08
+troisieme mot- >cas 03
+...
+sixieme mot -> cas 08 qui n'est pas vide on le place aprés le 02 (liste chainée tel que 02 -> 06)
+
+for the linear probing, we start puting and thn doing hops every time we enconter a filled case.
 
 
 
