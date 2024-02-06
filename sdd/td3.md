@@ -32,4 +32,29 @@ With the given hashing function all the lines return the same value (a collision
 
 ### Exo 2.
 
+La chiffre des unités dans nequel base c'est toujours la base
+
+~~~
+            g(f(n)) (hex)       decimal
+01  le              E              14
+02  cours           8               3
+03  appelé          3               ...
+04  structures      ...
+05  de 
+06  données
+07  est
+08  absolument
+09  génial
+10  j'adore
+11  faire
+12  ses
+13  TD/TME
+~~~
+
+In every base, if we have an operation that is `number % base` we will get the last element at the right.
+
+`n % (b^0) + (n - (n % b^0)) % b^1 + ...`
+
+
+
 
