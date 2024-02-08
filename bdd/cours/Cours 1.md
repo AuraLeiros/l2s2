@@ -39,7 +39,7 @@ Implant --> Building up our DB, query & updating methods\
 
 I : Informal discussion that leads-up to technical documentation\
 F : Translate this needs into links between them (Entity-Association model)\
-I : Use machine-oriented languages like SQL\
+I : Use machine-oriented languages like SQL
 
 #### Two different models for two different needs
 
@@ -54,7 +54,37 @@ Logical representation of data, normally in a sheet setting.\
 Used by the designer and the developer.
 
 Therefore, our stepping stone will be learn how to design an Entity-Association model...
- 
+
 ### 2. _Mãos à obra!_ How to design a Entity-Association Model
 
+As we indicated before, we're going to divide the information into two different subsections
 
+#### Analysis of our needs
+
+At first we need to have an informal discussion with the involved stakeholders that identifies <u>objects</u> and the <u>links</u> between them, identify the operations and the possible updates that the project may have.
+
+#### Conceptual scheme
+
+~~~
+Warning! /!\ The official LU2IN009 course this year (spring '24) uses as a study case an university database, with the following...
+
+Needs
+
+- Inscriptions to modules
+- Affectation of tutors to students
+- Planning of rooms
+
+Objets to modelize
+
+- Students
+- Modules
+- Tutors
+- Rooms
+
+Links & Restrictions
+
+- Students will be enrolled in 1 or + modules for an academic year
+- Courses are in a given room, with a starting and duration known
+
+In the following documents I will be using the same examples, always in a code box and clearly marked as example, and will try to clarify all and not just copying the course!
+~~~
