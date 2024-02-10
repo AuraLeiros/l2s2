@@ -171,6 +171,6 @@ The association with the strong entity can't have attributes.
 
     Useful where a lot of objects share properties and have other priorities standard to them!
 
-    It's usually done in the form of descendants and inheritance.
+    It's usually done in the form of descendance and inheritance.
 
 ## And that's all folks! 
