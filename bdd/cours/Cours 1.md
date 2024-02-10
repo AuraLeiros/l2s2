@@ -119,12 +119,58 @@ They're a sub-set of attributes of an entity class.
 Useful to distinguish between two attributes from the same class, the identifier must be unique.
 
 Every entity class must have an identifier, it can be either:
+
 1. Natural, using different attributes of the class. `Ex. Name + Surname + City`
 2. Artificial, a new "attribute", `Ex. Spanish DNI no.`
 
+The identifiers depend as well of our needs.
 
+We need to take care of the cardinality of the relationships
 
+#### Transforming a n-ary association into an entity
 
+There are a lot of reasons for wanting to do the transformation, these include simplifying the DB (in the case of complex relationships), more easy queries to the database, reduced redundance of information and easier scalability.
+
+To do this we have to:
+
+1. Create a new entity $E$ using the attributes without the identifier.
+2. Give an identifier to $E$ (artificial if none of the E subsets can be chose as such)
+3. Create an association $A{i}$ between every $E{i}$ and $E$ with 1:1 cardinality.
+
+#### Reflexivity association
+
+An entity can be associated to itself while maintaining different cardinalities!
+
+#### Weak entities
+
+A weak entity is an entity that can be identified by itself (usually because it doesn't have enough attributes).
+
+They usually have an "identifier" called "discriminant attributes" but they need to be in the context of the strong entity.
+
+The 1:1 cardinality is implicit.
+
+The association with the strong entity can't have attributes.
  
+### F.A.Q. Conception
 
-  
+1. Attribute or entity?
+
+    Depends of the application needs.
+
+2. Entity or association?
+
+    General rule: All action that implicates two entities creates a new association.
+
+3. Attribute of an association or of an entity?
+
+    Depends on cardinality!
+    - If 1:1 then they're equivalent
+    - If n:m depends of the specific context and semantics.
+
+4. Specialization?!
+
+    Useful where a lot of objects share properties and have other priorities standard to them!
+
+    It's usually done in the form of descendants and inheritance.
+
+## And that's all folks! 
