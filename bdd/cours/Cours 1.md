@@ -88,3 +88,43 @@ Links & Restrictions
 
 In the following documents I will be using the same examples, always in a code box and clearly marked as example, and will try to clarify all and not just copying the course!
 ~~~
+
+ #### Definitions
+ 
+1. `entities` --> real-world objects
+    - Can be specific ('Anne DUPONT') or abstract ('the bank account of a client')
+
+2. `associations` --> relations between entities
+3. `attributes` --> properties that gives information about entities of the same class
+
+    - Presents a property or a characteristic of an entity class
+    - We can make sets with entities and associations
+    - Has a nom and pre-defined values
+    - Atomic (no multiple values)
+    - A value at a time for every entity.
+
+ ---
+
+1. `entity class` --> set of entities that have the same properties.
+    - `Student, Module, ... `
+
+2. `association class` --> set of associations that relies entities of the same class.
+
+--- 
+
+1. `Identifiers` 
+
+They're a sub-set of attributes of an entity class.
+
+Useful to distinguish between two attributes from the same class, the identifier must be unique.
+
+Every entity class must have an identifier, it can be either:
+1. Natural, using different attributes of the class. `Ex. Name + Surname + City`
+2. Artificial, a new "attribute", `Ex. Spanish DNI no.`
+
+
+
+
+ 
+
+  
