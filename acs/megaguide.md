@@ -1,4 +1,18 @@
-## Megaguide of HTML & PHP
+# Megaguide of HTML & PHP
+
+
+### PHP regular expressions
+
+The wildcard `.` matches any element to escape the dot we use `\.`
+
+`\w` filters all [A-Za-z0-9]
+`+` 1 or more ocurrences
+`.` 0 or more ocurrences
+
+
+
+
+
 
 ### HTML tags
 
