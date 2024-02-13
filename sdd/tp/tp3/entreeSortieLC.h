@@ -5,4 +5,7 @@
 
 
 /* Inserer n livres dans une bibliotèque depuis un fichier */
-Biblio* charger_n_entrees(char* nomfic, int n)
+Biblio* charger_n_entrees(char* nomfic, int n);
+
+/* Stocket une bibliotheque au bon format */
+void enregistrer_biblio(Biblio* b, char* nomfic);

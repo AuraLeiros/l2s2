@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include "entreeSortieLC.h"
-#include "biblioLC.c"
+#include "biblioLC.h"
 
 
 Biblio* charger_n_entrees(char* nomfic, int n){
@@ -50,19 +50,59 @@ Biblio* charger_n_entrees(char* nomfic, int n){
 
 void enregistrer_biblio(Biblio *b, char* nomfic){
 
-
-    FILE *fptr = fopen(nomfic, "w");
     Livre *curr = b->Livre;
+    Livre *temp;
+    char* titre = NULL;
+    char* auteur = NULL;
+    char* buffer = NULL;
     int numLiv;
-    char titre[50];
-    char auteur[50];
+    size_t memLen;
+
+    /* Ouverture et vérification du fichier */
+    FILE *fptr = fopen(nomfic, "a");
+    if (!fptr){
+        printf("Failed to open file!\n");
+        exit(-1);
+    }
 
     while(curr != NULL){
-        
+        temp = curr->suiv;
 
+        /* Parcourir et sauvegarder les données dans des variables temporaires */
+        titre = strdup(curr->titre);
+        if (!titre){
+            fclose(fptr);
+            exit(EXIT_FAILURE);
+        }
+        auteur = strdup(curr->auteur);
+        if (!auteur){
+            free(titre);
+            fclose(fptr);
+            exit(EXIT_FAILURE);
+        }
+        numLiv = curr->num;
 
+        /* Allocation mémoire du buffer */
+        memLen = (snprintf(NULL, 0, "%s %d %s\n", titre, numLiv, auteur)) + 1;
+        buffer = malloc(memLen * sizeof(char));
+        if (!buffer) {
+            free(titre);
+            free(auteur);
+            fclose(fptr);
+            exit(EXIT_FAILURE); 
+        }
 
+        /* Écrire dans le fichier */
+        snprintf(buffer, memLen, "%s %d %s\n", titre, numLiv, auteur);
+        fprintf(fptr, "%s", buffer);
 
+        /* Libération de la mémoire des variables temporaires */
+        free(titre);
+        free(auteur);
+        free(buffer);
 
+        curr=temp;
     }
+
+    fclose(fptr);
 }
