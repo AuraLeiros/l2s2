@@ -44,7 +44,7 @@ Biblio* creer_biblio(){
 
 void liberer_biblio(Biblio* b){
     Livre *temp;
-    Livre *curr = b->livre;
+    Livre *curr = b->l;
 
     while(curr != NULL){
         temp = curr->suiv;
@@ -55,10 +55,10 @@ void liberer_biblio(Biblio* b){
     free(b);
 }
 
-void inserer_en_tete(Biblio b*, int num, char* titre, char* auteur){
+void inserer_en_tete(Biblio* b, int num, char* titre, char* auteur){
 
     Livre *temp = creer_livre(num, titre, auteur);
-    temp->suiv = b->livre;
-    b->livre = temp;
+    temp->suiv = b->l;
+    b->l = temp;
 }
 

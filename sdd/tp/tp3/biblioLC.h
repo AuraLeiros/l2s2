@@ -11,7 +11,7 @@ typedef struct livre {
 
 typedef struct biblio {
     /* data */
-    Livre *L;
+    Livre *l;
 } Biblio;
 
 /* Creation d'un livre */
@@ -24,7 +24,7 @@ void liberer_livre(Livre* l);
 Biblio* creer_biblio();
 
 /* Libèration de la mémoire alloué à une bibliothèque */
-void liberer_biblio(Biblio b*);
+void liberer_biblio(Biblio* b);
 
 /* Ajout d'un nouveau livre en tête à la bibliothèque */
 void inserer_en_tete(Biblio* b, int num, char* titre, char* auteur);

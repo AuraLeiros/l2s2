@@ -3,54 +3,75 @@
 /* entreeSortieLC.c - TP3 & TP4 SDD */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "entreeSortieLC.h"
 #include "biblioLC.h"
-
+#define BUF_SIZE 256
 
 Biblio* charger_n_entrees(char* nomfic, int n){
 
-    char ligne[100];
-    char delimiter[] = " "
+    char ligne[BUF_SIZE];
+    char titre[64];
+    char auteur[64];
     int numLiv;
-    char titre[50];
-    chat auteur[50];
+    char delimiter[] = " ";
+    int countLines = 0;
 
-    Biblio* maBiblio = creer_biblio();
+    /* Création d'une bibliotheque */
+    Biblio* newBiblio = creer_biblio();
 
     /* Ouverture du fichier et vérification en mémoire */
     FILE *fptr = fopen(nomfic, "r");
     if (!fptr){
-        printf("failed to open file\n")
-        exit(-1)
+        printf("failed to open file\n");
+        exit(-1);
+    }
+
+    /* Vérification que le nombre de lignes present dans le fichier est >= n sortie du programme sinon exit*/
+    int ch;
+    while ((ch = fgetc(fptr)) != EOF) {
+        if (ch == '\n') {
+            countLines++;
+        }
+    }
+
+    if (ch != '\n' && countLines != 0) {
+        countLines++;
+    }
+
+    if (n < countLines) {
+        printf("Le nombre de lignes passé en paramétre est inferieur au nombre de lignes dans le fichier\n");
+        exit(EXIT_FAILURE);
     }
 
     /* Traitement du fichier */
-    for (x=1;x<=n;x++){
-
+    for (int x=1;x<=n;x++){
+        
         /* Obtention d'une ligne */
-        fgets(ligne, 100, fptr);
+        fgets(ligne, BUF_SIZE, fptr);
 
         /* Tokenization de chaque élément dans une ligne */
         char *token = strtok(ligne, delimiter);
         numLiv = atoi(token);
         token = strtok(NULL, delimiter);
-        titre = strcpy(titre, token);
+        strcpy(titre, token);
         token = strtok(NULL, delimiter);
-        auteur = strcpy(auteur, token);
+        strcpy(auteur, token);
 
         /* Insertion en tête dans notre bibliothèque */
-        inserer_en_tete(maBiblio, numLiv, titre, auteur);
+        inserer_en_tete(newBiblio, numLiv, titre, auteur);
+
     }
 
     /* Fermeture du fichier et return du résultat */
     fclose(fptr);
-    return maBiblio;
-
+    return newBiblio;
 }
+
 
 void enregistrer_biblio(Biblio *b, char* nomfic){
 
-    Livre *curr = b->Livre;
+    Livre *curr = b->l;
     Livre *temp;
     char* titre = NULL;
     char* auteur = NULL;
