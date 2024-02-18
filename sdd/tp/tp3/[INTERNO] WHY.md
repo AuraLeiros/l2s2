@@ -12,3 +12,6 @@ ultimo exercicio, imos asumir de que dous libros non poden ter o mesmo número d
 
 
 cambiados los return por exit, "handed gracefully"
+
+
+la fonction 2.2 peut avoir des collisions, characters non suportees (asume ascii, etc)

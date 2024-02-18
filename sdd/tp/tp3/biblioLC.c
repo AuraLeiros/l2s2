@@ -10,7 +10,7 @@ Livre* creer_livre(int num, char* titre, char* auteur){
 
     Livre *newLivre = malloc(sizeof(Livre));
     if (!newLivre){
-        fprintf(stderr, "Erreur dans l'allocation de la mémoire !");
+        fprintf(stderr, "Erreur dans l'allocation de la mémoire !\n");
         return NULL;
     }
 
@@ -49,7 +49,7 @@ Biblio* creer_biblio(){
 
     Biblio* newBiblio = malloc(sizeof(Biblio));
     if (!newBiblio){
-        fprintf(stderr, "Erreur dans l'allocation mémoire de la bibliothèque !");
+        fprintf(stderr, "Erreur dans l'allocation mémoire de la bibliothèque !\n");
         return NULL;
     }
 
@@ -83,7 +83,7 @@ void inserer_en_tete(Biblio* b, int num, char* titre, char* auteur){
     Livre *temp = creer_livre(num, titre, auteur);
 
     if (!temp){
-        fprintf(stderr, "Erreur dans l'allocation mémoire !");
+        fprintf(stderr, "Erreur dans l'allocation mémoire !\n");
         return;
     }
 
@@ -93,6 +93,10 @@ void inserer_en_tete(Biblio* b, int num, char* titre, char* auteur){
 
 /* Ex. 1.6 - Afficher un livre */
 void afficher_livre(Livre* l){
+    if (!l != NULL){
+        fprintf(stderr, "Le pointeur donné est NULL !\n");
+        return;
+    }
     printf("Numéro d'enregistrement : %d\nTitre : %s\nAuteur : %s\n", l->num, l->titre, l->auteur);
 }
 
@@ -124,9 +128,9 @@ Livre* recherche_livre_num(Biblio* b, int num){
 }
 
 /* Ex. 1.6 - Rechercher un livre par son titre */
-Livre* recherche_par_titre(Livre* l, char* titre){
+Livre* recherche_par_titre(Biblio* b, char* titre){
 
-    Livre* curr = l;
+    Livre* curr = b->l;
 
     while(curr != NULL){
         if (strcmp(curr->titre, titre) == 0){

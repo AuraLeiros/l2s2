@@ -10,9 +10,9 @@
 
 Biblio* charger_n_entrees(char* nomfic, int n){
 
-    char ligne[BUF_SIZE];
-    char titre[64];
-    char auteur[64];
+    char ligne[(3 * BUF_SIZE)];
+    char titre[BUF_SIZE];
+    char auteur[BUF_SIZE];
     int numLiv;
     char delimiter[] = " ";
     int countLines = 0;
@@ -53,15 +53,15 @@ Biblio* charger_n_entrees(char* nomfic, int n){
     /* Traitement du fichier */
     for (int x=1;x<=n;x++){
         
-        fgets(ligne, BUF_SIZE, fptr);
+        fgets(ligne, (3 * BUF_SIZE), fptr);
 
         /* Tokenization de chaque élément dans une ligne */
         token = strtok(ligne, delimiter);
         numLiv = atoi(token);
         token = strtok(NULL, delimiter);
-        strcpy(titre, token);
+        strncpy(titre, token, BUF_SIZE);
         token = strtok(NULL, delimiter);
-        strcpy(auteur, token);
+        strNcpy(auteur, token, BUF_SIZE);
 
         inserer_en_tete(newBiblio, numLiv, titre, auteur);
 

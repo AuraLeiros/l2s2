@@ -43,7 +43,7 @@ Biblio* creer_biblio();
 Livre* recherche_par_num(Biblio* b, int num);
 
 /* Ex. 1.6 - Recherche d'un ouvrage par son titre */
-Livre* recherche_par_titre(Livre* l, char* titre);
+Livre* recherche_par_titre(Biblio* b, char* titre);
 
 /* Ex. 1.6 - Recherche de tous les livres d'un même auteur */
 Biblio* recherche_par_auteur(Biblio* b, char* auteur);
