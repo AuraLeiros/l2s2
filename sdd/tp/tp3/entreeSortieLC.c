@@ -16,19 +16,21 @@ Biblio* charger_n_entrees(char* nomfic, int n){
     int numLiv;
     char delimiter[] = " ";
     int countLines = 0;
+    char* token;
+    int ch = 0;
 
-    /* Création d'une bibliotheque */
     Biblio* newBiblio = creer_biblio();
-
-    /* Ouverture du fichier et vérification en mémoire */
-    FILE *fptr = fopen(nomfic, "r");
-    if (!fptr){
-        printf("failed to open file\n");
-        exit(-1);
+    if (!newBiblio){
+        return NULL;
     }
 
-    /* Vérification que le nombre de lignes present dans le fichier est >= n sortie du programme sinon exit*/
-    int ch;
+    FILE *fptr = fopen(nomfic, "r");
+    if (!fptr){
+        fprintf(stderr, "Le fichier n'a pas pu être ouvert !\n");
+        return NULL;
+    }
+
+    /* Vérification que le nombre de lignes présent dans le fichier est >= n sortie du programme sinon retourne NULL */
     while ((ch = fgetc(fptr)) != EOF) {
         if (ch == '\n') {
             countLines++;
@@ -39,29 +41,28 @@ Biblio* charger_n_entrees(char* nomfic, int n){
         countLines++;
     }
 
-    if (n > countLines) {
-        printf("Le nombre de lignes passé en paramétre est inferieur au nombre de lignes dans le fichier\n");
-        exit(EXIT_FAILURE);
+    if ((n > countLines) || (countLines == 0)) {
+        fprintf(stderr, "Erreur dans le calcul du nombre de lignes dans le fichier.\n");
+        fclose(fptr);
+        return NULL;
     }
 
-    /* Retourner le pointer à l'origine avant de faire le traitement */
+    /* Retourner le pointeur à l'origine avant de faire le traitement */
     rewind(fptr);
 
     /* Traitement du fichier */
     for (int x=1;x<=n;x++){
         
-        /* Obtention d'une ligne */
         fgets(ligne, BUF_SIZE, fptr);
 
         /* Tokenization de chaque élément dans une ligne */
-        char *token = strtok(ligne, delimiter);
+        token = strtok(ligne, delimiter);
         numLiv = atoi(token);
         token = strtok(NULL, delimiter);
         strcpy(titre, token);
         token = strtok(NULL, delimiter);
         strcpy(auteur, token);
 
-        /* Insertion en tête dans notre bibliothèque */
         inserer_en_tete(newBiblio, numLiv, titre, auteur);
 
     }
@@ -76,70 +77,48 @@ void enregistrer_biblio(Biblio *b, char* nomfic){
 
     Livre *curr = b->l;
     Livre *temp;
-    char* titre = NULL;
-    char* auteur = NULL;
     char* buffer = NULL;
-    int numLiv;
     size_t memLen;
 
     /* Ouverture et vérification du fichier */
     FILE *fptr = fopen(nomfic, "a");
     if (!fptr){
-        printf("Failed to open file!\n");
-        exit(-1);
+        fprintf(stderr, "Le fichier n'a pas pu être ouvert !\n");
+        return;
     }
 
     while(curr != NULL){
         temp = curr->suiv;
 
-        /* Parcourir et sauvegarder les données dans des variables temporaires */
-        titre = strdup(curr->titre);
-        if (!titre){
-            fclose(fptr);
-            exit(EXIT_FAILURE);
-        }
-        auteur = strdup(curr->auteur);
-        if (!auteur){
-            free(titre);
-            fclose(fptr);
-            exit(EXIT_FAILURE);
-        }
-        numLiv = curr->num;
-
-        /* Allocation mémoire du buffer */
-        memLen = (snprintf(NULL, 0, "%s %d %s\n", titre, numLiv, auteur));
+        /* Calcul de la taille mémoire du buffer */
+        memLen = (snprintf(NULL, 0, "%s %d %s\n", curr->titre, curr->num, curr->auteur));
         if (memLen == -1){
-            free(titre);
-            free(auteur);
+            fprintf(stderr, "Erreur mémoire, arrêt de la fonction\n");
             fclose(fptr);
-            exit(EXIT_FAILURE);
+            return;
         }
 
         /* Allocation du buffer, le +1 c'est pour le null terminator */
         buffer = malloc((memLen + 1) * sizeof(char));
         if (!buffer) {
-            free(titre);
-            free(auteur);
+            fprintf(stderr, "Erreur mémoire, arrêt de la fonction\n");
             fclose(fptr);
-            exit(EXIT_FAILURE); 
+            return; 
         }
 
         /* Écriture dans le buffer */
-        memLen = snprintf(buffer, memLen, "%s %d %s\n", titre, numLiv, auteur);
+        memLen = snprintf(buffer, (memLen + 1), "%s %d %s\n", curr->titre, curr->num, curr->auteur);
         if (memLen == -1){
-            free(titre);
-            free(auteur);
+            fprintf(stderr, "Erreur mémoire, arrêt de la fonction\n");
             free(buffer);
             fclose(fptr);
-            exit(EXIT_FAILURE);
+            return;
         }
         
         /* Écriture dans le fichier */
         fprintf(fptr, "%s", buffer);
 
         /* Libération de la mémoire des variables temporaires */
-        free(titre);
-        free(auteur);
         free(buffer);
 
         curr=temp;

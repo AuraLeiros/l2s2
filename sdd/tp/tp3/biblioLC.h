@@ -86,4 +86,4 @@ void afficher_livre(Livre* l);
 /* Ex. 1.6 - Afficher une bibliotheque */
 void afficher_biblio(Biblio* b);
 
-#endif // BIBLIOLC_H
+#endif

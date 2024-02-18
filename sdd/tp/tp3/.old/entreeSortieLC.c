@@ -16,6 +16,7 @@ Biblio* charger_n_entrees(char* nomfic, int n){
     int numLiv;
     char delimiter[] = " ";
     int countLines = 0;
+    char* token;
 
     /* Création d'une bibliotheque */
     Biblio* newBiblio = creer_biblio();
@@ -39,7 +40,7 @@ Biblio* charger_n_entrees(char* nomfic, int n){
         countLines++;
     }
 
-    if (n < countLines) {
+    if (n > countLines) {
         printf("Le nombre de lignes passé en paramétre est inferieur au nombre de lignes dans le fichier\n");
         exit(EXIT_FAILURE);
     }
@@ -54,7 +55,7 @@ Biblio* charger_n_entrees(char* nomfic, int n){
         fgets(ligne, BUF_SIZE, fptr);
 
         /* Tokenization de chaque élément dans une ligne */
-        char *token = strtok(ligne, delimiter);
+        token = strtok(ligne, delimiter);
         numLiv = atoi(token);
         token = strtok(NULL, delimiter);
         strcpy(titre, token);
@@ -63,7 +64,6 @@ Biblio* charger_n_entrees(char* nomfic, int n){
 
         /* Insertion en tête dans notre bibliothèque */
         inserer_en_tete(newBiblio, numLiv, titre, auteur);
-
     }
 
     /* Fermeture du fichier et return du résultat */
