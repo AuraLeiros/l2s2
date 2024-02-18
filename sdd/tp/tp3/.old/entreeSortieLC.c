@@ -39,7 +39,7 @@ Biblio* charger_n_entrees(char* nomfic, int n){
         countLines++;
     }
 
-    if (n > countLines) {
+    if (n < countLines) {
         printf("Le nombre de lignes passé en paramétre est inferieur au nombre de lignes dans le fichier\n");
         exit(EXIT_FAILURE);
     }
@@ -83,10 +83,10 @@ void enregistrer_biblio(Biblio *b, char* nomfic){
     size_t memLen;
 
     /* Ouverture et vérification du fichier */
-    FILE *fptr = fopen(nomfic, "a");
+    FILE *fptr = fopen(nomfic, "w");
     if (!fptr){
         printf("Failed to open file!\n");
-        exit(-1);
+        exit(EXIT_FAILURE);
     }
 
     while(curr != NULL){
@@ -107,16 +107,8 @@ void enregistrer_biblio(Biblio *b, char* nomfic){
         numLiv = curr->num;
 
         /* Allocation mémoire du buffer */
-        memLen = (snprintf(NULL, 0, "%s %d %s\n", titre, numLiv, auteur));
-        if (memLen == -1){
-            free(titre);
-            free(auteur);
-            fclose(fptr);
-            exit(EXIT_FAILURE);
-        }
-
-        /* Allocation du buffer, le +1 c'est pour le null terminator */
-        buffer = malloc((memLen + 1) * sizeof(char));
+        memLen = (snprintf(NULL, 0, "%s %d %s\n", titre, numLiv, auteur)) + 1;
+        buffer = malloc(memLen * sizeof(char));
         if (!buffer) {
             free(titre);
             free(auteur);
@@ -124,17 +116,8 @@ void enregistrer_biblio(Biblio *b, char* nomfic){
             exit(EXIT_FAILURE); 
         }
 
-        /* Écriture dans le buffer */
-        memLen = snprintf(buffer, memLen, "%s %d %s\n", titre, numLiv, auteur);
-        if (memLen == -1){
-            free(titre);
-            free(auteur);
-            free(buffer);
-            fclose(fptr);
-            exit(EXIT_FAILURE);
-        }
-        
-        /* Écriture dans le fichier */
+        /* Écrire dans le fichier */
+        snprintf(buffer, memLen, "%s %d %s\n", titre, numLiv, auteur);
         fprintf(fptr, "%s", buffer);
 
         /* Libération de la mémoire des variables temporaires */
