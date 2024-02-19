@@ -36,17 +36,22 @@ typedef struct table{
 int fonctionClef(char* auteur);
 
 /* Ex. 2.4 - Définir la fonction de hachage */
+int fonctionHachage(int cle, int m);
 
 
 /*-------------------------------*/
-/* Initialisation de structures*/
+/* Manipulation de structures*/
 /*-------------------------------*/
 
 /* Ex. 2.3 - Creation d'un livre */
 LivreH* creer_livre(int num, char* titre, char* auteur);
 
+
 /* Ex. 2.3 - Creation d'une bibliothèque */
 BiblioH* creer_biblio(int m);
+
+/*Ex. 2.5. - Ajout d'un nouveau livre à la bibliothèque */
+void inserer(BiblioH* b,int num,char* titre,char* auteur);
 
 
 /*-------------------------------*/

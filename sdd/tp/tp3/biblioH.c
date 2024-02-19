@@ -3,6 +3,7 @@
 /* biblioH.c - TP3 & TP4 SDD */
 
 #include <stdio.h>
+#include <math.h>
 #include "biblioH.h"
 
 /* Ex 2.2 - Fonction pour générer une clé */
@@ -110,3 +111,31 @@ void liberer_biblio(BiblioH* b){
 
 
 
+/* Ex. 2.4 - Définir la fonction de hachage */
+int fonctionHachage(int cle, int m){
+    double a = ((sqrt(5) - 1) / 2);
+    double hash = m * ((cle * a) - floor(cle * a));
+    return (int)floor(hash);
+}
+
+void inserer(BiblioH* b, int num, char* titre, char* auteur){
+    if (!b){
+        fprintf(stderr, "La bibliothéque envoyé est vide");
+        return;
+    }
+
+    int idx = 0;
+
+    /* Calculer la case dans le tableau */
+    idx = fonctionHachage(fonctionClef(auteur), b->m);
+
+    /* Insertion */
+    LivreH* nouveauLivre = creer_livre(num, titre, auteur);
+    if (!nouveauLivre){
+        fprintf(stderr, "Erreur dans l'allocation mémoire");
+    }
+    nouveauLivre->suivant = b->T[idx];
+    b->T[idx] = nouveauLivre;
+
+    return;
+}
