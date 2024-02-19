@@ -6,10 +6,10 @@
 #define ENTREESORTIEH_H
 
 /* Inserer n livres dans une bibliotèque depuis un fichier */
-BiblioH* charger_n_entrees(char* nomfic, int m, int n);
+BiblioH* charger_n_entrees_h(char* nomfic, int m, int n);
 
 /* Stocket une bibliotheque au bon format */
-void enregistrer_biblio(BiblioH* b, char* nomfic);
+void enregistrer_biblio_h(BiblioH* b, char* nomfic);
 
 
 #endif

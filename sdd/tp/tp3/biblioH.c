@@ -19,7 +19,7 @@ int fonctionClef(char* auteur){
 }
 
 /* Ex. 2.3 - Creation d'un livre */
-LivreH* creer_livre(int num, char* titre, char* auteur){
+LivreH* creer_livre_h(int num, char* titre, char* auteur){
 
     LivreH* newLivre = malloc(sizeof(LivreH));
     if (!newLivre){
@@ -32,13 +32,13 @@ LivreH* creer_livre(int num, char* titre, char* auteur){
 
     newLivre->titre = strdup(titre);
     if (!newLivre->titre){
-        liberer_livre(newLivre);
+        liberer_livre_h(newLivre);
         return NULL;
     }
 
     newLivre->auteur = strdup(auteur);
     if (!newLivre->auteur){
-        liberer_livre(newLivre);
+        liberer_livre_h(newLivre);
         return NULL;
     }
     newLivre->suivant = NULL;
@@ -47,7 +47,7 @@ LivreH* creer_livre(int num, char* titre, char* auteur){
 }
 
 /* Ex. 2.3 - Creation d'une bibliothèque */
-BiblioH* creer_biblio(int m){
+BiblioH* creer_biblio_h(int m){
 
     BiblioH* newBiblio = malloc(sizeof(BiblioH));
     if (!newBiblio){
@@ -63,7 +63,7 @@ BiblioH* creer_biblio(int m){
 }
 
 /* Ex. 2.3 - Liberer une bibliothèque */
-void liberer_livre(LivreH* l){
+void liberer_livre_h(LivreH* l){
 
     if (!l){
         return;
@@ -85,7 +85,7 @@ void liberer_livre(LivreH* l){
 }
 
 /* Ex. 2.3 - Liberer une bibliothèque */
-void liberer_biblio(BiblioH* b){
+void liberer_biblio_h(BiblioH* b){
 
     if (!b){
         return;
@@ -118,7 +118,7 @@ int fonctionHachage(int cle, int m){
     return (int)floor(hash);
 }
 
-void inserer(BiblioH* b, int num, char* titre, char* auteur){
+void inserer_h(BiblioH* b, int num, char* titre, char* auteur){
     if (!b){
         fprintf(stderr, "La bibliothéque envoyé est vide");
         return;
@@ -130,7 +130,7 @@ void inserer(BiblioH* b, int num, char* titre, char* auteur){
     idx = fonctionHachage(fonctionClef(auteur), b->m);
 
     /* Insertion */
-    LivreH* nouveauLivre = creer_livre(num, titre, auteur);
+    LivreH* nouveauLivre = creer_livre_h(num, titre, auteur);
     if (!nouveauLivre){
         fprintf(stderr, "Erreur dans l'allocation mémoire");
     }
@@ -143,7 +143,7 @@ void inserer(BiblioH* b, int num, char* titre, char* auteur){
 
 
 /* Ex. 2.6 - Afficher un livre */
-void afficher_livre(LivreH* l){
+void afficher_livre_h(LivreH* l){
     if (!l){
         fprintf(stderr, "Le livre passé en paramétre est NULL\n");
         printf("Livre NULL, merci d'indiquer un autre livre\n");
@@ -156,7 +156,7 @@ void afficher_livre(LivreH* l){
 }
 
 /* Ex. 2.6 - Afficher une bibliothèque*/
-void afficher_biblio(BiblioH* b){
+void afficher_biblio_h(BiblioH* b){
     if (!b){
         fprintf(stderr, "La bibliothèque passé en paramétre est NULL\n");
         printf("Bibliothèque NULL, merci d'indiquer une autre bibliothèque\n");
@@ -168,7 +168,7 @@ void afficher_biblio(BiblioH* b){
     for (int x=0; x < b->m; x++){
         curr = b->T[x];
         while(curr != NULL){
-            afficher_livre(curr);
+            afficher_livre_h(curr);
             curr = curr->suivant;
         }
     }

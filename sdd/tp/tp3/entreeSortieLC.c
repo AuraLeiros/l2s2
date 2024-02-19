@@ -8,7 +8,7 @@
 #include "biblioLC.h"
 #define BUF_SIZE 256
 
-Biblio* charger_n_entrees(char* nomfic, int n){
+Biblio* charger_n_entrees_lc(char* nomfic, int n){
 
     char ligne[(3 * BUF_SIZE)];
     char titre[BUF_SIZE];
@@ -70,7 +70,7 @@ Biblio* charger_n_entrees(char* nomfic, int n){
     }
 }
 
-void enregistrer_biblio(Biblio *b, char* nomfic){
+void enregistrer_biblio_lc(Biblio *b, char* nomfic){
 
     Livre *curr = b->l;
     Livre *temp;

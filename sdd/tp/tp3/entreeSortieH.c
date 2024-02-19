@@ -8,7 +8,7 @@
 #define BUF_SIZE 256
 
 /* Inserer n livres dans une bibliotèque depuis un fichier */
-BiblioH* charger_n_entrees(char* nomfic, int m, int n){
+BiblioH* charger_n_entrees_h(char* nomfic, int m, int n){
 
     int countLines = 0;
     int ch = 0;
@@ -59,7 +59,7 @@ BiblioH* charger_n_entrees(char* nomfic, int m, int n){
 }
 
 /* Stocker une bibliotheque au bon format*/
-void enregistrer_biblio(BiblioH* b, char* nomfic){
+void enregistrer_biblio_h(BiblioH* b, char* nomfic){
 
     LivreH* curr = NULL;
     char* buffer = NULL;

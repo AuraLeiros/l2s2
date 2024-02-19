@@ -44,14 +44,14 @@ int fonctionHachage(int cle, int m);
 /*-------------------------------*/
 
 /* Ex. 2.3 - Creation d'un livre */
-LivreH* creer_livre(int num, char* titre, char* auteur);
+LivreH* creer_livre_h(int num, char* titre, char* auteur);
 
 
 /* Ex. 2.3 - Creation d'une bibliothèque */
-BiblioH* creer_biblio(int m);
+BiblioH* creer_biblio_h(int m);
 
 /*Ex. 2.5. - Ajout d'un nouveau livre à la bibliothèque */
-void inserer(BiblioH* b,int num,char* titre,char* auteur);
+void inserer_h(BiblioH* b,int num,char* titre,char* auteur);
 
 
 /*-------------------------------*/
@@ -59,10 +59,23 @@ void inserer(BiblioH* b,int num,char* titre,char* auteur);
 /*-------------------------------*/
 
 /* Ex. 2.3 - Liberer une bibliothèque */
-void liberer_livre(LivreH* l);
+void liberer_livre_h(LivreH* l);
 
 /* Ex. 2.3 - Liberer une bibliothèque */
-void liberer_biblio(BiblioH* b);
+void liberer_biblio_h(BiblioH* b);
+
+
+/*-------------------------------*/
+        /* Affichage */
+/*-------------------------------*/
+
+/* Ex. 2.6 - Afficher un livre */
+void afficher_livre_h(LivreH* l);
+
+/* Ex. 2.6 - Afficher une bibliothèque*/
+void afficher_biblio_h(BiblioH* b);
+
+
 
 
 #endif

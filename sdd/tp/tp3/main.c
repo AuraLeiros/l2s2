@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "biblioLC.c"
+#include "biblioLC.h"
 #include "entreeSortieLC.h"
+#include "biblioH.h"
+#include "entreeSortieH.h"
 #define BUF_SIZE 256
 
 void menu(){

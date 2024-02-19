@@ -6,7 +6,7 @@
 #include "biblioLC.h"
 
 /* Ex. 1.2 - Creation d'un livre */
-Livre* creer_livre(int num, char* titre, char* auteur){
+Livre* creer_livre_lc(int num, char* titre, char* auteur){
 
     Livre *newLivre = malloc(sizeof(Livre));
     if (!newLivre){
@@ -18,13 +18,13 @@ Livre* creer_livre(int num, char* titre, char* auteur){
 
     newLivre->titre = strdup(titre);
     if (!newLivre->titre){
-        liberer_livre(newLivre);
+        liberer_livre_lc(newLivre);
         return NULL;
     }
 
     newLivre->auteur = strdup(auteur);
     if (!newLivre->auteur){
-        liberer_livre(newLivre);
+        liberer_livre_lc(newLivre);
         return NULL;
     }
     newLivre->suiv = NULL;
@@ -33,7 +33,7 @@ Livre* creer_livre(int num, char* titre, char* auteur){
 }
 
 /* Ex. 1.2 - Libération de la mémoire alloué à un livre */
-void liberer_livre(Livre* l){
+void liberer_livre_lc(Livre* l){
 
     if (!l){
         return;
@@ -45,7 +45,7 @@ void liberer_livre(Livre* l){
 }
 
 /* Ex. 1.2 - Creation d'une bibliothèque */
-Biblio* creer_biblio(){
+Biblio* creer_biblio_lc(){
 
     Biblio* newBiblio = malloc(sizeof(Biblio));
     if (!newBiblio){
@@ -59,7 +59,7 @@ Biblio* creer_biblio(){
 }
 
 /* Ex. 1.2 - Libèration de la mémoire alloué à une bibliothèque */
-void liberer_biblio(Biblio* b){
+void liberer_biblio_lc(Biblio* b){
 
     if (!b){
         return;
@@ -70,7 +70,7 @@ void liberer_biblio(Biblio* b){
 
     while(curr != NULL){
         temp = curr->suiv;
-        liberer_livre(curr);
+        liberer_livre_lc(curr);
         curr = temp;
     }
 
@@ -78,9 +78,9 @@ void liberer_biblio(Biblio* b){
 }
 
 /* Ex. 1.2 - Ajout d'un nouveau livre dans tête de la bibliothèque */
-void inserer_en_tete(Biblio* b, int num, char* titre, char* auteur){
+void inserer_en_tete_lc(Biblio* b, int num, char* titre, char* auteur){
 
-    Livre *temp = creer_livre(num, titre, auteur);
+    Livre *temp = creer_livre_lc(num, titre, auteur);
 
     if (!temp){
         fprintf(stderr, "Erreur dans l'allocation mémoire !\n");
@@ -92,7 +92,7 @@ void inserer_en_tete(Biblio* b, int num, char* titre, char* auteur){
 }
 
 /* Ex. 1.6 - Afficher un livre */
-void afficher_livre(Livre* l){
+void afficher_livre_lc(Livre* l){
     if (!l != NULL){
         fprintf(stderr, "Le pointeur donné est NULL !\n");
         return;
@@ -103,18 +103,18 @@ void afficher_livre(Livre* l){
 }
 
 /* Ex. 1.6 - Afficher une bibliotheque */
-void afficher_biblio(Biblio* b){
+void afficher_biblio_lc(Biblio* b){
 
     Livre* curr = b->l;
 
     while(curr != NULL){
-        afficher_livre(curr);
+        afficher_livre_lc(curr);
         curr = curr->suiv;
     }
 }
 
 /* Ex. 1.6 - Rechercher un livre par son numéro */
-Livre* recherche_livre_num(Biblio* b, int num){
+Livre* recherche_livre_num_lc(Biblio* b, int num){
 
     Livre* curr = b->l;
 
@@ -130,7 +130,7 @@ Livre* recherche_livre_num(Biblio* b, int num){
 }
 
 /* Ex. 1.6 - Rechercher un livre par son titre */
-Livre* recherche_par_titre(Biblio* b, char* titre){
+Livre* recherche_par_titre_lc(Biblio* b, char* titre){
 
     Livre* curr = b->l;
 
@@ -146,15 +146,15 @@ Livre* recherche_par_titre(Biblio* b, char* titre){
 }
 
 /* Ex. 1.6 - Recherche de tous les livres d'un même auteur */
-Biblio* recherche_par_auteur(Biblio* b, char* auteur){
+Biblio* recherche_par_auteur_lc(Biblio* b, char* auteur){
 
     Livre* curr = b->l;
     Livre* next;
-    Biblio* biblioAuteur = creer_biblio();
+    Biblio* biblioAuteur = creer_biblio_lc();
 
     while (curr != NULL){
         if (strcmp(curr->auteur, auteur) == 0){
-            inserer_en_tete(biblioAuteur, curr->num, curr->titre, curr->auteur);
+            inserer_en_tete_lc(biblioAuteur, curr->num, curr->titre, curr->auteur);
         }
         curr = curr->suiv;
     }
@@ -163,7 +163,7 @@ Biblio* recherche_par_auteur(Biblio* b, char* auteur){
 }
 
 /* Ex. 1.6 - Supression d'un ouvrage */
-Biblio* suppresion_ouvrage(Biblio* b, int num, char* auteur, char* titre){
+Biblio* suppresion_ouvrage_lc(Biblio* b, int num, char* auteur, char* titre){
 
     Livre* curr = b->l;
     Livre* prev = NULL;
@@ -177,7 +177,7 @@ Biblio* suppresion_ouvrage(Biblio* b, int num, char* auteur, char* titre){
             } else {
                 prev->suiv = next;
             }
-            liberer_livre(curr);
+            liberer_livre_lc(curr);
         } else {
             prev = curr;
         }
@@ -187,7 +187,7 @@ Biblio* suppresion_ouvrage(Biblio* b, int num, char* auteur, char* titre){
 }
 
 /* Ex. 1.6 - Fusion de deux bibliothèques */
-Biblio* fusion_biblio(Biblio* b1, Biblio* b2){
+Biblio* fusion_biblio_lc(Biblio* b1, Biblio* b2){
 
     /* Préconditions */
     if (!b1 && !b2){
@@ -215,7 +215,7 @@ Biblio* fusion_biblio(Biblio* b1, Biblio* b2){
     return b1;
 }
 
-Livre* recherche_dupliques(Biblio* b){
+Livre* recherche_dupliques_lc(Biblio* b){
 
     Livre* res = NULL;
     Livre* res_aux = NULL;
@@ -240,10 +240,10 @@ Livre* recherche_dupliques(Biblio* b){
         /* Ajouter au resultat si une ocurrence à été trouvé */
         if (occurrences > 0){
             if (!res){
-                res = creer_livre(curr->num, curr->titre, curr->auteur);
+                res = creer_livre_lc(curr->num, curr->titre, curr->auteur);
                 res_aux = res;
             } else {
-                res_aux->suiv = creer_livre(curr->num, curr->titre, curr->auteur);
+                res_aux->suiv = creer_livre_lc(curr->num, curr->titre, curr->auteur);
                 res_aux = res_aux->suiv;
             }
         }
