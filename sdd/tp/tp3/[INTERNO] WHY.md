@@ -15,3 +15,5 @@ cambiados los return por exit, "handed gracefully"
 
 
 la fonction 2.2 peut avoir des collisions, characters non suportees (asume ascii, etc)
+
+A cambiar no entreesortieH e no outro é que son do tipo size_t e polo tanto non poden ser -1

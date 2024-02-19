@@ -77,7 +77,7 @@ Biblio* supression_ouvrage(Biblio* b, int num, char* auteur, char* titre);
 
 
 /*-------------------------------*/
-/* Affichage */
+        /* Affichage */
 /*-------------------------------*/
 
 /* Ex. 1.6 - Afficher un livre*/

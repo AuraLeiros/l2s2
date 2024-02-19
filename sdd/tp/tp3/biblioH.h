@@ -40,7 +40,7 @@ int fonctionHachage(int cle, int m);
 
 
 /*-------------------------------*/
-/* Manipulation de structures*/
+  /* Manipulation de structures*/
 /*-------------------------------*/
 
 /* Ex. 2.3 - Creation d'un livre */

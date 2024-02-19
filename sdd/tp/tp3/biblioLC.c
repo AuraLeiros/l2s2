@@ -97,7 +97,9 @@ void afficher_livre(Livre* l){
         fprintf(stderr, "Le pointeur donné est NULL !\n");
         return;
     }
+    printf("------------------\n");
     printf("Numéro d'enregistrement : %d\nTitre : %s\nAuteur : %s\n", l->num, l->titre, l->auteur);
+    printf("------------------\n");
 }
 
 /* Ex. 1.6 - Afficher une bibliotheque */

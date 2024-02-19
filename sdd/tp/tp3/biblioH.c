@@ -136,6 +136,42 @@ void inserer(BiblioH* b, int num, char* titre, char* auteur){
     }
     nouveauLivre->suivant = b->T[idx];
     b->T[idx] = nouveauLivre;
+    b->nE++;
+
+    return;
+}
+
+
+/* Ex. 2.6 - Afficher un livre */
+void afficher_livre(LivreH* l){
+    if (!l){
+        fprintf(stderr, "Le livre passé en paramétre est NULL\n");
+        printf("Livre NULL, merci d'indiquer un autre livre\n");
+        return;
+    }
+    printf("------------------\n");
+    printf("Numéro d'enregistrement : %d\nTitre : %s\nAuteur : %s\nClé : %d\n", l->num, l->titre, l->auteur, l->clef);
+    printf("------------------\n");
+    return;
+}
+
+/* Ex. 2.6 - Afficher une bibliothèque*/
+void afficher_biblio(BiblioH* b){
+    if (!b){
+        fprintf(stderr, "La bibliothèque passé en paramétre est NULL\n");
+        printf("Bibliothèque NULL, merci d'indiquer une autre bibliothèque\n");
+        return;
+    }
+
+    LivreH* curr = NULL;
+
+    for (int x=0; x < b->m; x++){
+        curr = b->T[x];
+        while(curr != NULL){
+            afficher_livre(curr);
+            curr = curr->suivant;
+        }
+    }
 
     return;
 }
