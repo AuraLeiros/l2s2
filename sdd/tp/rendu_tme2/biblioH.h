@@ -78,7 +78,7 @@ void inserer_h(BiblioH* b,int num,char* titre,char* auteur);
 BiblioH* fusion_biblio_h(BiblioH* b1, BiblioH* b2);
 
 /* Ex. 2.6 - Supression d'un ouvrage */
-BiblioH* supression_ouvrage_h(BiblioH* b, int num, char* auteur, char* titre);
+BiblioH* suppression_ouvrage_h(BiblioH* b, int num, char* auteur, char* titre);
 
 
 /*-------------------------------*/

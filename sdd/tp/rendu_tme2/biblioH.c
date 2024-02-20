@@ -98,7 +98,7 @@ BiblioH* creer_biblio_h(int m){
 
     newBiblio->nE = 0;
     newBiblio->m = m;
-    newBiblio->T = malloc(sizeof(LivreH*) * m);
+    newBiblio->T = calloc(m, sizeof(LivreH*));
     if(!newBiblio->T){
         fprintf(stderr, "Erreur dans l'allocation memoire\n");
         return NULL;
@@ -263,13 +263,13 @@ BiblioH* fusion_biblio_h(BiblioH* b1, BiblioH* b2){
         fprintf(stderr, "Erreur dans les paramétres\n");
         return NULL;
     } else if (!b1 && (b2 != NULL)){
-        fprintf(stderr, "Erreur dans les paramétres\n");
+        //fprintf(stderr, "Erreur dans les paramétres\n");
         return b2;
     } else if ((b1 != NULL) && (!b2)){
-        fprintf(stderr, "Erreur dans les paramétres\n");
+        //fprintf(stderr, "Erreur dans les paramétres\n");
         return b1;
     } else if (b1 == b2){
-        fprintf(stderr, "Erreur dans les paramétres\n");
+        //fprintf(stderr, "Erreur dans les paramétres\n");
         return b1;
     }
 
@@ -282,12 +282,12 @@ BiblioH* fusion_biblio_h(BiblioH* b1, BiblioH* b2){
             curr = curr->suivant;
         }
     }
-
+    liberer_biblio_h(b2);
     return b1;
 }
 
-/* Ex. 2.6 - Supression d'un ouvrage */
-BiblioH* supression_ouvrage_h(BiblioH* b, int num, char* auteur, char* titre){
+/* Ex. 2.6 - suppression d'un ouvrage */
+BiblioH* suppression_ouvrage_h(BiblioH* b, int num, char* auteur, char* titre){
     if (!b || (b->nE < 0) || (num < 0) || !titre || !auteur || titre[0] == '\0' || auteur[0] == '\0'){
         fprintf(stderr, "Erreur dans les paramétres\n");
         return NULL;
@@ -301,17 +301,21 @@ BiblioH* supression_ouvrage_h(BiblioH* b, int num, char* auteur, char* titre){
         before = NULL;
         while(curr != NULL){
             if ((strcmp(curr->auteur, auteur) == 0) && (strcmp(curr->titre, titre) == 0) && (curr->num == num)){
+                LivreH* temp = curr;
                 if (!before){
                     b->T[x] = curr->suivant;
-                    liberer_livre_h(curr);
                 } else {
                     before->suivant = curr->suivant;
-                    liberer_livre_h(curr);
                 }
+                curr = curr->suivant; 
+                liberer_livre_h(temp);
+                b->nE--;
+                return b;
+            } else {
+                before = curr;
+                curr = curr->suivant;
             }
 
-            before = curr;
-            curr = curr->suivant;
         }
     }
     return b;

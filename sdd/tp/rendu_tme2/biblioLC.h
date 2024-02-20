@@ -72,8 +72,8 @@ void inserer_en_tete_lc(Biblio* b, int num, char* titre, char* auteur);
 /* Ex. 1.6 - Fusion de deux bibliothèques */
 Biblio* fusion_biblio_lc(Biblio* b1, Biblio* b2);
 
-/* Ex. 1.6 - Supression d'un ouvrage */
-Biblio* supression_ouvrage_lc(Biblio* b, int num, char* auteur, char* titre);
+/* Ex. 1.6 - suppression d'un ouvrage */
+Biblio* suppression_ouvrage_lc(Biblio* b, int num, char* auteur, char* titre);
 
 
 /*-------------------------------*/

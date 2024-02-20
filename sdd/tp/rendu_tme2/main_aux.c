@@ -93,6 +93,12 @@ int input_int(){
     return res;
 }
 
+/*-------------------------------*/
+        /* INPUTS - LC*/
+/*-------------------------------*/
+
+
+/* LC - Prend une entrée depuis le stdin et fais l'enregistrement */
 void ajouter_aux_lc(Biblio* b){
 
     char* titre = NULL;
@@ -125,15 +131,15 @@ void ajouter_aux_lc(Biblio* b){
     free(auteur);
 }
 
-
-void recherche_titre_aux_lc(Biblio* b){
+/* LC - Prend un numéro d'enregistrement depuis le stdin et affiche les livres écris par ce nom */
+void recherche_num_aux_lc(Biblio* b){
 
     int num = 0;
     Livre* temp = NULL;
 
     printf("Veuillez saisir le numéro d'enregistrement : ");
     input_int();
-    print("\n");
+    printf("\n");
 
     temp = recherche_par_num_lc(b, num);
     if (!temp){
@@ -147,6 +153,186 @@ void recherche_titre_aux_lc(Biblio* b){
     return;
 }
 
+/* LC - Prend un nom d'auteur depuis le stdin et affiche les livres écris par ce nom */
+void recherche_auteur_aux_lc(Biblio* b){
+
+    char* buffer;
+    Biblio* temp = NULL;
+
+    printf("Veuillez saisir le nom de l'auteur : ");
+    printf("\n");
+
+    buffer = input();
+    if(!buffer){
+        fprintf(stderr, "Erreur\n");
+        exit(EXIT_FAILURE);
+    }
+
+    temp = recherche_par_auteur_lc(b, buffer);
+    afficher_biblio_lc(temp);
+    liberer_biblio_lc(temp);
+    free(buffer);
+    
+    return;
+}
+
+/* LC - Prend un titre depuis le stdin et l'affiche */
+void recherche_titre_aux_lc(Biblio* b){
+
+    char* buffer = NULL;
+    Livre* temp = NULL;
+
+    printf("Veuillez saisir le titre : ");
+    printf("\n");
+
+    buffer = input();
+    if(!buffer){
+        fprintf(stderr, "Erreur\n");
+        exit(EXIT_FAILURE);
+    }
+
+    temp = recherche_par_titre_lc(b, buffer);
+    afficher_livre_lc(temp);
+    liberer_livre_lc(temp);
+    free(buffer); 
+
+    return; 
+}
+
+/* LC - Recherche des dupliques dans la bibliothèque et les affiche */
+void recherche_dupliques_aux_lc(Biblio* b){
+
+    Livre* curr = recherche_dupliques_lc(b);
+    Livre* temp = NULL;
+
+    while (curr != NULL){
+        afficher_livre_lc(curr);
+        temp = curr->suivant;
+        liberer_livre_lc(curr);
+        curr = temp;
+    }
+
+    return;
+
+}
+
+
+/*-------------------------------*/
+        /* INPUTS - H*/
+/*-------------------------------*/
+
+/* H - Prend une entrée depuis le stdin et fais l'enregistrement */
+void ajouter_aux_h(BiblioH* b){
+
+    char* titre = NULL;
+    char* auteur = NULL;
+    int num = 0;
+
+    printf("Veuillez saisir le numéro d'enregistrement : ");
+    printf("\n");
+    num = input_int();
+
+    printf("Veuillez saisir le titre : ");
+    printf("\n");
+    titre = input();
+    if (!titre){
+        fprintf(stderr, "Erreur dans l'input\n");
+        exit(EXIT_FAILURE);
+    }                 
+    
+    printf("Veuillez entrer l'auteur : ");
+    printf("\n");
+    auteur = input();
+    if (!auteur){
+        fprintf(stderr, "Erreur\n");
+        exit(EXIT_FAILURE);
+    }
+
+    inserer_h(b, num, titre, auteur);
+    free(titre);
+    free(auteur);
+
+    return;
+}
+
+/* LC - Prend un numéro d'enregistrement depuis le stdin et affiche les livres écris par ce nom */
+void recherche_num_aux_h(BiblioH* b){
+
+    int num = 0;
+    LivreH* temp = NULL;
+
+    printf("Veuillez saisir le numéro d'enregistrement : ");
+    printf("\n");
+    num = input_int();
+
+    temp = recherche_par_num_h(b, num);
+    afficher_livre_h(temp);
+    liberer_livre_h(temp);
+    
+    return;
+}
+
+/* LC - Prend un nom d'auteur depuis le stdin et affiche les livres écris par ce nom */
+void recherche_auteur_aux_h(BiblioH* b){
+
+    char* buffer = NULL;
+    BiblioH* temp = NULL;
+
+    printf("Veuillez saisir le nom de l'auteur : ");
+    printf("\n");
+    buffer = input();
+    if(!buffer){
+        fprintf(stderr, "Erreur\n");
+        exit(EXIT_FAILURE);
+    }
+
+    temp = recherche_par_auteur_h(b, buffer);
+    afficher_biblio_h(temp);
+    liberer_biblio_h(temp);
+    free(buffer);
+    
+    return;
+}
+
+/* LC - Prend un titre depuis le stdin et l'affiche */
+void recherche_titre_aux_h(BiblioH* b){ 
+
+    char* buffer = NULL;
+    LivreH* temp = NULL;
+
+    printf("Veuillez saisir le titre : ");
+    printf("\n");
+
+    buffer = input();
+    if(!buffer){
+        fprintf(stderr, "Erreur\n");
+        exit(EXIT_FAILURE);
+    }
+
+    temp = recherche_par_titre_h(b, buffer);
+    afficher_livre_h(temp);
+    liberer_livre_h(temp);
+    free(buffer);
+
+    return;
+}
+
+/* LC - Recherche des dupliques dans la bibliothèque et les affiche */
+void recherche_dupliques_aux_h(BiblioH* b){
+
+    LivreH* curr = NULL;
+    LivreH* temp = NULL;
+
+    curr = recherche_dupliques_h(b);
+    while (curr != NULL){
+        afficher_livre_h(curr);
+        temp = curr->suivant;
+        liberer_livre_h(curr);
+        curr = temp;
+    }
+}
+
+
 
 
 
@@ -154,16 +340,17 @@ void recherche_titre_aux_lc(Biblio* b){
     /* Tests de performance */
 /*-------------------------------*/
 
-/* Comparaison des temps de recherche d'une œuvre avec les 3 méthodes différentes. */
+/* Comparaison des temps de recherche avec les 3 méthodes différents. */
 void comparer_temps_recherche(Biblio* biblioLC, BiblioH* biblioH, int num, char* titre, char* auteur) {
     clock_t debut, fin;
     double temps_lc, temps_h;
 
+    printf("\n");
     /* Numéro */
     debut = clock();
     recherche_par_num_lc(biblioLC, num);
     fin = clock();
-    temps_lc = ((double) (fin - debut));
+    temps_lc = ((double) (fin - debut)) / CLOCKS_PER_SEC;
 
     debut = clock();
     recherche_par_num_h(biblioH, num);
@@ -197,4 +384,7 @@ void comparer_temps_recherche(Biblio* biblioLC, BiblioH* biblioH, int num, char*
     temps_h = ((double) (fin - debut)) / CLOCKS_PER_SEC;
 
     printf("Temps de recherche par auteur - Liste chaînée: %f, Table de hachage: %f\n", temps_lc, temps_h);
+    printf("\n");
 }
+
+

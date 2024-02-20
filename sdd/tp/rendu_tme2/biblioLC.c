@@ -239,16 +239,19 @@ Biblio* fusion_biblio_lc(Biblio* b1, Biblio* b2){
 
     /* Préconditions */
     if (!b1 && !b2){
-        fprintf(stderr, "Un des paramètres n'est pas valide");
+        fprintf(stderr, "Un des paramètres n'est pas valide\n");
         return NULL;
-    } else if (!b1 && (b2 != NULL)){
-        fprintf(stderr, "Un des paramètres n'est pas valide");
+    }
+    if (!b1){
         return b2;
-    } else if ((b1 != NULL) && (!b2)){
-        fprintf(stderr, "Un des paramètres n'est pas valide");
+    }
+    
+    if (!b2){
         return b1;
-    } else if (b1 == b2){
-        fprintf(stderr, "Un des paramètres n'est pas valide");
+    }
+
+    if (b1 == b2){
+        fprintf(stderr, "Les deux bibliothèques sont identiques\n");
         return b1;
     }
 
@@ -266,8 +269,8 @@ Biblio* fusion_biblio_lc(Biblio* b1, Biblio* b2){
     return b1;
 }
 
-/* Ex. 1.6 - Supression d'un ouvrage */
-Biblio* suppresion_ouvrage_lc(Biblio* b, int num, char* auteur, char* titre){
+/* Ex. 1.6 - suppression d'un ouvrage */
+Biblio* suppression_ouvrage_lc(Biblio* b, int num, char* auteur, char* titre){
 
     if (!b || (num < 0) || !titre || !auteur || titre[0] == '\0' || auteur[0] == '\0'){
         fprintf(stderr, "Un des paramètres n'est pas valide\n");

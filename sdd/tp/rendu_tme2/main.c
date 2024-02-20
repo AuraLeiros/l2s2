@@ -7,6 +7,7 @@
 #include "entreeSortieLC.h"
 #include "entreeSortieH.h"
 #include "main_aux.h"
+#include "test.h"
 
 #define BUF_SIZE 256
 
@@ -27,14 +28,14 @@ int main(int argc, char** argv){
         mode = input_int();
         switch (mode) {
             case 0:
-                printf("Fermeture du programme.\n");
+                printf("\n -- Sortie du programme -- \n");
                 break;
             case 1: /* Listes chainées */
                 menu_options();
                 int optionLC = input_int();
                 biblioLC = charger_n_entrees_lc(argv[1], atoi(argv[2]));
                 if(!biblioLC){
-                    fprintf(stderr, "Erreur à la lecture du fichier, fermeture du programme...");
+                    fprintf(stderr, "Erreur à la lecture du fichier, fermeture du programme...\n");
                     return EXIT_FAILURE;
                 }
                 switch (optionLC) {
@@ -57,47 +58,22 @@ int main(int argc, char** argv){
                     }
                     case 3:
                     {
-                        recherche_titre_aux_lc(biblioLC);
+                        recherche_num_aux_lc(biblioLC);
                         break;
                     }
                     case 4:
                     {
-                        printf("Veuillez saisir le nom de l'auteur :\n");
-                        char* buffer = input();
-                        if(!buffer){
-                            fprintf(stderr, "Erreur\n");
-                            return EXIT_FAILURE;
-                        }
-                        Biblio* temp = recherche_par_auteur_lc(biblioLC, buffer);
-                        afficher_biblio_lc(temp);
-                        liberer_biblio_lc(temp);
-                        free(buffer);
+                        recherche_auteur_aux_lc(biblioLC);
                         break;
                     }
                     case 5:
                     {
-                        printf("Veuillez saisir le titre :\n");
-                        char* buffer = input();
-                        if(!buffer){
-                            fprintf(stderr, "Erreur\n");
-                            return EXIT_FAILURE;
-                        }
-                        Livre* temp = recherche_par_titre_lc(biblioLC, buffer);
-                        afficher_livre_lc(temp);
-                        liberer_livre_lc(temp);
-                        free(buffer);   
+                        recherche_titre_aux_lc(biblioLC);
                         break;    
                     }                
                     case 6:
                     {
-                        Livre* curr = recherche_dupliques_lc(biblioLC);
-                        Livre* temp = NULL;
-                        while (curr != NULL){
-                            afficher_livre_lc(curr);
-                            temp = curr->suivant;
-                            liberer_livre_lc(curr);
-                            curr = temp;
-                        }
+                        recherche_dupliques_aux_lc(biblioLC);
                         break;
                     }
                     default:
@@ -111,7 +87,7 @@ int main(int argc, char** argv){
                 menu_options();
                 biblioHA = charger_n_entrees_h(argv[1], atoi(argv[2]));
                 if (!biblioHA){
-                    fprintf(stderr, "Erreur allocation !");
+                    fprintf(stderr, "Erreur allocation !\n");
                     return EXIT_FAILURE;
                 }
                 int optionH = input_int();
@@ -128,75 +104,27 @@ int main(int argc, char** argv){
                      }
                     case 2:
                     {
-                
-                        char* buffer = NULL;
-                        char* auteur = NULL;
-                        printf("Veuillez saisir le numéro d'enregistrement :\n");
-                        int num = input_int();
-                        printf("Veuillez saisir le titre : \n");
-                        buffer = input();
-                        if (!buffer){
-                            fprintf(stderr, "Erreur");
-                            return EXIT_FAILURE;
-                        }
-                        printf("Veuillez entrer l'auteur : \n");
-                        auteur = input();
-                        if (!auteur){
-                            fprintf(stderr, "Erreur\n");
-                            return EXIT_FAILURE;
-                        }
-                        inserer_h(biblioHA, num, buffer, auteur);
-                        free(buffer);
-                        free(auteur);
+                        ajouter_aux_h(biblioHA);
                         break;
                     }
                     case 3:
                     {
-                        printf("Veuillez saisir le numéro d'enregistrement :\n");
-                        int num = input_int();
-                        LivreH* temp = recherche_par_num_h(biblioHA, num);
-                        afficher_livre_h(temp);
-                        liberer_livre_h(temp);
+                        recherche_num_aux_h(biblioHA);
                         break;
                     }
                     case 4:
                     {
-                        printf("Veuillez saisir le nom de l'auteur :\n");
-                        char* buffer = input();
-                        if(!buffer){
-                            fprintf(stderr, "Erreur\n");
-                            return EXIT_FAILURE;
-                        }
-                        BiblioH* temp = recherche_par_auteur_h(biblioHA, buffer);
-                        afficher_biblio_h(temp);
-                        liberer_biblio_h(temp);
-                        free(buffer);
+                        recherche_auteur_aux_h(biblioHA);
                         break;
                     }
                     case 5:
                     {
-                        printf("Veuillez saisir le titre :\n");
-                        char* buffer = input();
-                        if(!buffer){
-                            fprintf(stderr, "Erreur\n");
-                            return EXIT_FAILURE;
-                        }
-                        LivreH* temp = recherche_par_titre_h(biblioHA, buffer);
-                        afficher_livre_h(temp);
-                        liberer_livre_h(temp);
-                        free(buffer);   
+                        recherche_titre_aux_h(biblioHA);
                         break;  
                     }  
                     case 6:
                     {
-                        LivreH* curr = recherche_dupliques_h(biblioHA);
-                        LivreH* temp = NULL;
-                        while (curr != NULL){
-                            afficher_livre_h(curr);
-                            temp = curr->suivant;
-                            liberer_livre_h(curr);
-                            curr = temp;
-                        }
+                        recherche_dupliques_aux_h(biblioHA);
                         break;
                     }
                     default:
@@ -206,10 +134,30 @@ int main(int argc, char** argv){
                     }
                 }
                 break;
-            case 3:
+            case 3: /* Tests */
+                tous_tests_lc();
+                tous_tests_h();
+                break;
+            case 4: /* Calcul temps de recherche */
+                printf("Temps avec 500 entrées\n");
+                Biblio* biblioLC_i = charger_n_entrees_lc(argv[1], 500);
+                BiblioH* biblioH_i = charger_n_entrees_h(argv[1], 500);
+                comparer_temps_recherche(biblioLC_i, biblioH_i, 324, "ATYTRILLK", "tpvlofyaetzw");
+                printf("Temps avec 5000 entrées\n");
+                Biblio* biblioLC_ii = charger_n_entrees_lc(argv[1], 5000);
+                BiblioH* biblioH_ii = charger_n_entrees_h(argv[1], 5000);
+                comparer_temps_recherche(biblioLC_ii, biblioH_ii, 3712, "CCSMCPTYKBVMN", "eqlscmbg");
+                printf("Temps avec 50,000 entrées\n");
+                Biblio* biblioLC_iii = charger_n_entrees_lc(argv[1], 50000);
+                BiblioH* biblioH_iii = charger_n_entrees_h(argv[1], 50000);
+                comparer_temps_recherche(biblioLC_iii, biblioH_iii, 45307, "AUIRZIUHRMFLK", "szqsqzenitwg");
+                printf("Temps avec 99,999 entrées\n");
+                Biblio* biblioLC_iv = charger_n_entrees_lc(argv[1], 99999);
+                BiblioH* biblioH_iv = charger_n_entrees_h(argv[1], 99999);
+                comparer_temps_recherche(biblioLC_iv, biblioH_iv, 91713, "GJITPD", "ihsl");
                 break;
             default:
-                printf("Mode invalide. Veuillez choisir 1, 2 ou 3. 0 pour sortir\n");
+                printf("\nMode invalide. Veuillez choisir 1, 2 ou 3. 0 pour sortir\n");
         }
     } while (mode != 0);
     
@@ -224,6 +172,7 @@ int main(int argc, char** argv){
     */
     
 
+    creer_livre_lc_test();
 
     return EXIT_SUCCESS;
 }

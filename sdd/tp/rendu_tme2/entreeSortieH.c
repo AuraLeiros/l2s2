@@ -25,7 +25,7 @@ BiblioH* charger_n_entrees_h(char* nomfic, int n){
     int num = 0;
 
 
-    int m = floor(n / 0.75);
+    int m = floor(n / 0.99);
     BiblioH* newBiblio = creer_biblio_h(m);
     if (!newBiblio){
         fprintf(stderr, "Erreur dans la création de la bibliothèque\n");
