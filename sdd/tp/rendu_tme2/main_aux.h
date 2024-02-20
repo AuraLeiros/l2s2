@@ -27,7 +27,10 @@ char* input();
 int input_int();
 
 /* LC - Prend les paramétres depuis le stdin et fais l'enregistrement */
-void enregistrer_lc(Biblio* b);
+void ajouter_aux_lc(Biblio* b);
+
+/* LC - Prend les paramétres depuis le stdin et fais l'enregistrement */
+void recherche_titre_aux_lc(Biblio* b);
 
 
 /*-------------------------------*/

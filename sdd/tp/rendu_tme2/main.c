@@ -10,53 +10,6 @@
 
 #define BUF_SIZE 256
 
-
-
-void comparer_temps_recherche(Biblio* biblioLC, BiblioH* biblioH, int num, char* titre, char* auteur) {
-    clock_t debut, fin;
-    double temps_lc, temps_h;
-
-    /* numéro */
-    debut = clock();
-    recherche_par_num_lc(biblioLC, num);
-    fin = clock();
-    temps_lc = ((double) (fin - debut)) / CLOCKS_PER_SEC;
-
-    debut = clock();
-    recherche_par_num_h(biblioH, num);
-    fin = clock();
-    temps_h = ((double) (fin - debut)) / CLOCKS_PER_SEC;
-
-    printf("Temps de recherche par numéro - Liste chaînée: %f, Table de hachage: %f\n", temps_lc, temps_h);
-
-    /* Titre */
-    debut = clock();
-    recherche_par_titre_lc(biblioLC, titre);
-    fin = clock();
-    temps_lc = ((double) (fin - debut)) / CLOCKS_PER_SEC;
-
-    debut = clock();
-    recherche_par_titre_h(biblioH, titre);
-    fin = clock();
-    temps_h = ((double) (fin - debut)) / CLOCKS_PER_SEC;
-
-    printf("Temps de recherche par titre - Liste chaînée: %f, Table de hachage: %f\n", temps_lc, temps_h);
-
-    /* Auteur */
-    debut = clock();
-    recherche_par_auteur_lc(biblioLC, auteur);
-    fin = clock();
-    temps_lc = ((double) (fin - debut)) / CLOCKS_PER_SEC;
-
-    debut = clock();
-    recherche_par_auteur_h(biblioH, auteur);
-    fin = clock();
-    temps_h = ((double) (fin - debut)) / CLOCKS_PER_SEC;
-
-    printf("Temps de recherche par auteur - Liste chaînée: %f, Table de hachage: %f\n", temps_lc, temps_h);
-}
-
-
 int main(int argc, char** argv){
 
     if (argc != 3) {
@@ -92,21 +45,19 @@ int main(int argc, char** argv){
                     }
                     case 1:
                     {
+                        /* Afficher la bibliothèque */
                         afficher_biblio_lc(biblioLC);
                         break;
                     }
                     case 2:
                     {
-                        enregistrer_lc(biblioLC);
+                        /* Ajouter un ouvrage à la bibliothèque */
+                        ajouter_aux_lc(biblioLC);
                         break;
                     }
                     case 3:
                     {
-                        printf("Veuillez saisir le numéro d'enregistrement :\n");
-                        int num = input_int();
-                        Livre* temp = recherche_par_num_lc(biblioLC, num);
-                        afficher_livre_lc(temp);
-                        liberer_livre_lc(temp);
+                        recherche_titre_aux_lc(biblioLC);
                         break;
                     }
                     case 4:
@@ -255,8 +206,10 @@ int main(int argc, char** argv){
                     }
                 }
                 break;
+            case 3:
+                break;
             default:
-                printf("Mode invalide. Veuillez choisir 1 ou 2. 0 pour sortir\n");
+                printf("Mode invalide. Veuillez choisir 1, 2 ou 3. 0 pour sortir\n");
         }
     } while (mode != 0);
     

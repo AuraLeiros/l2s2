@@ -93,7 +93,7 @@ int input_int(){
     return res;
 }
 
-void enregistrer_lc(Biblio* b){
+void ajouter_aux_lc(Biblio* b){
 
     char* titre = NULL;
     char* auteur = NULL;
@@ -126,7 +126,26 @@ void enregistrer_lc(Biblio* b){
 }
 
 
+void recherche_titre_aux_lc(Biblio* b){
 
+    int num = 0;
+    Livre* temp = NULL;
+
+    printf("Veuillez saisir le numéro d'enregistrement : ");
+    input_int();
+    print("\n");
+
+    temp = recherche_par_num_lc(b, num);
+    if (!temp){
+        fprintf(stderr, "Erreur dans le processus de trouver le livre");
+        exit(EXIT_FAILURE);
+    }
+
+    afficher_livre_lc(temp);
+    liberer_livre_lc(temp);
+
+    return;
+}
 
 
 
