@@ -1,44 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "biblioLC.h"
-#include "entreeSortieLC.h"
-#include "biblioH.h"
-#include "entreeSortieH.h"
-#define BUF_SIZE 256
-
-void menu(){
-    printf("-------------- MENU ---------------\n\n");
-    printf("OPTIONS :\n\n");
-    printf("0 - Sortie du programme\n");
-    printf("1 - Affichage d'une bibliothèque\n");
-    printf("2 - Insérer un ouvrage\n");
-    printf("3 - Recherche par numéro d'enregistrement\n");
-    printf("4 - Recherche par auteur\n");
-    printf("5 - Recherche par titre\n");
-    printf("6 - Recherche des ouvrages avec plusieurs exemplaires\n");
-    printf("Tapez le numéro de l'option que vous voulez choisir : \n\n");
-}
-
-/* Function auxiliaire pour faciliter la gestion du switch */
-char* input(){
-
-    char* buffer = malloc(3 * BUF_SIZE);
-    if (!buffer){
-        fprintf(stderr, "Erreur dans l'allocation mémoire\n");
-        return NULL;
-    }
-
-    fflush(stdout);
-    if(!fgets(buffer, (3*BUF_SIZE), stdin)){
-        fprintf(stderr, "Erreur dans la lecture\n");
-        free(buffer);
-        return NULL;
-    }
-    
-    return buffer;
-}
-
-int main(int argc, char** argv){
 
     //Biblio* maBiblio = NULL;
     char buffer[(3 * BUF_SIZE)];
@@ -51,7 +10,7 @@ int main(int argc, char** argv){
 
     /* Check des arguments */
     if (argc != 3) {
-        printf("Usage: %s txt_file number_lines", argv[0]);
+        printf("Usage: %s txt_file umber_lines", argv[0]);
         exit(EXIT_FAILURE);
     }
 
@@ -175,6 +134,3 @@ int main(int argc, char** argv){
 
     printf("Merci et au revoir !\n");
     return EXIT_SUCCESS;
-}
-
-
