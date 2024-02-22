@@ -375,7 +375,7 @@ void creer_biblio_h_test(){
 
 void recherche_par_num_h_test(){
 
-    BiblioH* testBiblio = creer_biblio_h(100);
+    BiblioH* testBiblio = creer_biblio_h(200);
     inserer_h(testBiblio, 123, "DIXTIGSIE", "svey");
     inserer_h(testBiblio, 942, "MEDITERRANEA", "festa");
 

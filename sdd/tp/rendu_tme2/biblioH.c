@@ -160,24 +160,24 @@ BiblioH* recherche_par_auteur_h(BiblioH* b, char* auteur){
         return NULL;
     }
 
-    LivreH* curr = NULL;
-
-    int m = floor(b->m / 10);
-    BiblioH* newBiblio = creer_biblio_h(m);
+    BiblioH* newBiblio = creer_biblio_h(b->m);
     if (!newBiblio){
         fprintf(stderr, "Erreur dans l'allocation mémoire\n");
         return NULL;
     }
-   
 
-    for(int x=0; x < b->m; x++){
-        curr = b->T[x];
-        while (curr != NULL){
-            if(strcmp(curr->auteur, auteur) == 0){
-                inserer_h(newBiblio, curr->num, curr->titre, curr->auteur);
-            }
-            curr = curr->suivant;
+    int idx = fonctionHachage(fonctionClef(auteur), b->m);
+    if (b->T[idx] == NULL) {
+        printf("Pas de livres de l'auteur indiqué dans la table de hachage !");
+        return NULL;
+    }
+
+    LivreH* curr = b->T[idx];
+    while (curr != NULL){
+        if(strcmp(curr->auteur, auteur) == 0){
+            inserer_h(newBiblio, curr->num, curr->titre, auteur);
         }
+        curr = curr->suivant;
     }
 
     if(newBiblio->nE > 0){
@@ -187,6 +187,7 @@ BiblioH* recherche_par_auteur_h(BiblioH* b, char* auteur){
         return NULL;
     }
 }
+
 
 /* Ex. 2.6 - Recherche de ouvrages dupliqués. */
 LivreH* recherche_dupliques_h(BiblioH* b){
@@ -263,13 +264,10 @@ BiblioH* fusion_biblio_h(BiblioH* b1, BiblioH* b2){
         fprintf(stderr, "Erreur dans les paramétres\n");
         return NULL;
     } else if (!b1 && (b2 != NULL)){
-        //fprintf(stderr, "Erreur dans les paramétres\n");
         return b2;
     } else if ((b1 != NULL) && (!b2)){
-        //fprintf(stderr, "Erreur dans les paramétres\n");
         return b1;
     } else if (b1 == b2){
-        //fprintf(stderr, "Erreur dans les paramétres\n");
         return b1;
     }
 

@@ -1,3 +1,7 @@
+/* Aura Leirós García - 21218034 */
+/* aura.leiros@etu.sorbonne-universite.fr */
+/* biblioLC.c - TP3 & TP4 SDD */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -206,6 +210,7 @@ void liberer_biblio_lc(Biblio* b){
     while(curr != NULL){
         temp = curr->suivant;
         liberer_livre_lc(curr);
+        curr = NULL;
         curr = temp;
     }
 

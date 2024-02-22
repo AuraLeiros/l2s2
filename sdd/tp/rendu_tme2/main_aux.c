@@ -350,40 +350,40 @@ void comparer_temps_recherche(Biblio* biblioLC, BiblioH* biblioH, int num, char*
     debut = clock();
     recherche_par_num_lc(biblioLC, num);
     fin = clock();
-    temps_lc = ((double) (fin - debut)) / CLOCKS_PER_SEC;
+    temps_lc = ((double) (fin - debut)) / CLOCKS_PER_SEC * 1000.0;
 
     debut = clock();
     recherche_par_num_h(biblioH, num);
     fin = clock();
-    temps_h = ((double) (fin - debut)) / CLOCKS_PER_SEC;
+    temps_h = ((double) (fin - debut)) / CLOCKS_PER_SEC * 1000.0;
 
-    printf("Temps de recherche par numéro - Liste chaînée: %f, Table de hachage: %f\n", temps_lc, temps_h);
+    printf("Recherche par numéro - Liste chaînée: %f ms, Table de hachage: %f ms\n", temps_lc, temps_h);
 
     /* Titre */
     debut = clock();
     recherche_par_titre_lc(biblioLC, titre);
     fin = clock();
-    temps_lc = ((double) (fin - debut)) / CLOCKS_PER_SEC;
+    temps_lc = ((double) (fin - debut)) / CLOCKS_PER_SEC * 1000.0;
 
     debut = clock();
     recherche_par_titre_h(biblioH, titre);
     fin = clock();
-    temps_h = ((double) (fin - debut)) / CLOCKS_PER_SEC;
+    temps_h = ((double) (fin - debut)) / CLOCKS_PER_SEC * 1000.0;
 
-    printf("Temps de recherche par titre - Liste chaînée: %f, Table de hachage: %f\n", temps_lc, temps_h);
+    printf("Recherche par titre - Liste chaînée: %f, ms Table de hachage: %f ms\n", temps_lc, temps_h);
 
     /* Auteur */
     debut = clock();
     recherche_par_auteur_lc(biblioLC, auteur);
     fin = clock();
-    temps_lc = ((double) (fin - debut)) / CLOCKS_PER_SEC;
+    temps_lc = ((double) (fin - debut)) / CLOCKS_PER_SEC * 1000.0;
 
     debut = clock();
     recherche_par_auteur_h(biblioH, auteur);
     fin = clock();
-    temps_h = ((double) (fin - debut)) / CLOCKS_PER_SEC;
+    temps_h = ((double) (fin - debut)) / CLOCKS_PER_SEC * 1000.0;
 
-    printf("Temps de recherche par auteur - Liste chaînée: %f, Table de hachage: %f\n", temps_lc, temps_h);
+    printf("Recherche par auteur - Liste chaînée: %f ms, Table de hachage: %f ms\n", temps_lc, temps_h);
     printf("\n");
 }
 

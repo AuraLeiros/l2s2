@@ -139,40 +139,47 @@ int main(int argc, char** argv){
                 tous_tests_h();
                 break;
             case 4: /* Calcul temps de recherche */
+                printf("Q 3.1.\n");
+                Biblio* test31_lc = charger_n_entrees_lc(argv[1], 50000);
+                BiblioH* test31_h = charger_n_entrees_h(argv[1], 50000);
+                comparer_temps_recherche(test31_lc, test31_h, 21900, "EOKVISJYVWSMH", "hysmharwcdjg");
+                comparer_temps_recherche(test31_lc, test31_h, 35147, "FMFR", "enphhnoryie");
+                comparer_temps_recherche(test31_lc, test31_h, 60234, "COUSAS", "Castelao");
+                comparer_temps_recherche(test31_lc, test31_h, 79245, "NasOrillasDoSar", "Rosalia");
+                printf("FIN Q.3.1\n");
                 printf("Temps avec 500 entrées\n");
                 Biblio* biblioLC_i = charger_n_entrees_lc(argv[1], 500);
                 BiblioH* biblioH_i = charger_n_entrees_h(argv[1], 500);
                 comparer_temps_recherche(biblioLC_i, biblioH_i, 324, "ATYTRILLK", "tpvlofyaetzw");
+                printf("N'existe pas!\n");
+                comparer_temps_recherche(biblioLC_i, biblioH_i, 765, "COUSAS", "castelao");
+                printf("\n");
                 printf("Temps avec 5000 entrées\n");
                 Biblio* biblioLC_ii = charger_n_entrees_lc(argv[1], 5000);
                 BiblioH* biblioH_ii = charger_n_entrees_h(argv[1], 5000);
                 comparer_temps_recherche(biblioLC_ii, biblioH_ii, 3712, "CCSMCPTYKBVMN", "eqlscmbg");
+                printf("N'existe pas!\n");
+                comparer_temps_recherche(biblioLC_ii, biblioH_ii, 7987, "COUSAS", "castelao");
+                printf("\n");
                 printf("Temps avec 50,000 entrées\n");
                 Biblio* biblioLC_iii = charger_n_entrees_lc(argv[1], 50000);
                 BiblioH* biblioH_iii = charger_n_entrees_h(argv[1], 50000);
                 comparer_temps_recherche(biblioLC_iii, biblioH_iii, 45307, "AUIRZIUHRMFLK", "szqsqzenitwg");
+                printf("N'existe pas!\n");
+                comparer_temps_recherche(biblioLC_iii, biblioH_iii, 98754, "AURA", "CarlosFuentes");
+                printf("\n");
                 printf("Temps avec 99,999 entrées\n");
                 Biblio* biblioLC_iv = charger_n_entrees_lc(argv[1], 99999);
                 BiblioH* biblioH_iv = charger_n_entrees_h(argv[1], 99999);
                 comparer_temps_recherche(biblioLC_iv, biblioH_iv, 91713, "GJITPD", "ihsl");
+                printf("N'existe pas!\n");
+                comparer_temps_recherche(biblioLC_iii, biblioH_iii, 110000, "PEDRO_PARAMO", "RULFO");
+                printf("\n");
                 break;
             default:
                 printf("\nMode invalide. Veuillez choisir 1, 2 ou 3. 0 pour sortir\n");
         }
     } while (mode != 0);
     
-
-    /* Ex 3.1 - Comparaison des temps de recherche */
-    /*
-    Biblio* biblioLCTest = NULL;
-    BiblioH* biblioHTest = NULL;
-    biblioLCTest = charger_n_entrees_lc(argv[1], 5000);
-    biblioHTest = charger_n_entrees_h(argv[1], 5000);
-    comparer_temps_recherche(biblioLCTest, biblioHTest, 4898, "CDMIOYZSKF", "ejspeaswhl");
-    */
-    
-
-    creer_livre_lc_test();
-
     return EXIT_SUCCESS;
 }
