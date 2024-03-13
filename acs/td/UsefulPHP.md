@@ -118,4 +118,12 @@ After a preg_match this is how it's going to be:
 
 Avaliable functions
 
-`requeter_en_pop($sock, $req)` function that sends a request and 
+`requeter_en_pop($sock, $req)` function that sends a request and reads the answer, returns false if the request fails or the answer does not start by +OK.
+
+`fgets($sock)` allows to read the answer from a sock stream.
+
+`fputs($socket)` allows to send a request through the socket.
+
+`fsockopen($server, $port, $errno, $errstr)` opens a socket
+
+`fclose($socket)` closes a socket
