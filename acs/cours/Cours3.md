@@ -90,3 +90,31 @@ The input tags of type file send files, they store them in the array $_FILES wit
 
 We have a header function THAT MUST BE SENT BEFORE ANY OTHER FUNCTION
 
+The Content-Type sent by default will be text/html this is a good thing but the problem is that we do not define the accepted-charset so it's better to manually do it.
+
+#### Hidden inputs
+
+HTML provides a input tag to memorize previous answers or other content, this is not secure as it can be easy doctored.
+
+### Cookies
+
+Cookies are a way to create pseudo-state connections with clients storing information, credentials and such.
+
+HTTP servers will send a header called Set-Cookie where every cookie is a series of variable=value separated by a semicolon
+
+#### Cookies with PHP
+
+Two arrays `$_SERVER` and `$_COOKIE`.
+
+`setcookie($cookiename, $value)`
+
+#### Sessions
+
+Sessions are the way to store fundamentals about the user, authentication, preferences, etc. while the session is current.
+
+This can be fresh-started or initialized thanks to the cookie placed into the client.
+
+We have some utilites, `$_SESSION` , session_start() that in the first visit (where the array is empty) will send a header Set-Cookie in the next sessions will initialize the array to the precedent value.
+
+`unset() will clean the place of a session that it's inutile`
+
