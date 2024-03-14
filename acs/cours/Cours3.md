@@ -118,3 +118,20 @@ We have some utilites, `$_SESSION` , session_start() that in the first visit (wh
 
 `unset() will clean the place of a session that it's inutile`
 
+### Example of a form with select
+
+Every fieldset has to have a legend.
+
+~~~
+<form action="submit.php" method="post">
+        <label for="color">Select your favorite color:</label><br>
+        <select name="color" id="color">
+            <option value="red">Red</option>
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+            <option value="yellow">Yellow</option>
+            <option value="orange">Orange</option>
+        </select><br><br>
+        <input type="submit" value="Submit">
+    </form>
+~~~
