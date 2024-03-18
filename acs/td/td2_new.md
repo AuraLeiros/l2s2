@@ -38,7 +38,6 @@ $html .= "</ol>";
 return $html;
 
 ?>
-
 ~~~
 
 ### Exercice 2.
@@ -111,5 +110,7 @@ define('RE_HEURE', "/^([01][0-9]|2[0-3])[0-5][0-9][0-5][0-9]([ap]m)?$/i");
 
 
 ### Exercice 6. 
+
+This REGEX is designed to match a header into groups, the first group is only the name of the header and then a single group with the attributes 
 
 ``define('RE_ENTETE', "/^([A-Z][A-Za-z]*(?:-[A-Z][A-Za-z]+)?):\s+(.*?)\s*$/");``
