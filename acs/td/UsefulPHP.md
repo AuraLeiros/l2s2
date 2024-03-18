@@ -1,3 +1,8 @@
+Aura Leirós García\
+Made with <3 in Portugal and Galiza\
+A.C.S. 23-24
+
+
 ### Useful PHP Functions
 
 #### Arrays
@@ -126,4 +131,52 @@ Avaliable functions
 
 `fsockopen($server, $port, $errno, $errstr)` opens a socket
 
-`fclose($socket)` closes a socket
+`fclose($socket)` closes a socket.
+
+`fermer_session_pop($socket)`sends a QUIT request to the server to close the session.
+
+`lire_message_pop($socket)` reads the body of the POP server answer
+
+`lire_entetes($socket)` reads the headers and returns an array with them (and sub-arrays in case of multiple values), the index are the headers names.
+
+`choisir_message_pop($socket, $criteres)` $criteres is an array of headers, the function will search all the messages and return an array with all the ones that coincides with the criteria.
+
+`presenter_message_pop($socket, $criteria)` displays all the elements that are within the scope of choisir_message_pop
+
+--- 
+
+`http_args ($serveur='', $entetes=array(), $version='')` returns a request with different elements depending of the HTTP version
+
+`requeter_en_http ($url, $req='GET', $version='1.1', $entetes=array())` This function returns an array composed of the return code an array with the headers in the server answer and the body.
+
+#### TD/TME5
+
+`list($a, $b, $c) = array()` allows to decompose an array and store the VALUES in some variables.
+
+`fournir_page($r)` a cache system returns a code in 3 numbers,, the headers and the document. This function returns the headers + echo page. (a verifier!)
+
+`type_cache($headers)` returns the type of Content-Type found in an array of headers
+
+`limiter_cache($headers)` returns true if theres not expiration or the document expires in the future, false if it's already expired
+
+`time()`
+
+`serialize($array)` transforms an array into an string
+
+`unserialize($text)` the inverse of serialize
+
+`memoriser_cache($dir, $nom, $entetes, $page)` creates the files needed to store a page. returns true if the two files are created.
+
+`file_put_contents` This function is identical to calling fopen(), fwrite() and fclose() successively to write data to a file.
+
+`trouver_cache($dir, $nom)` tries to locate a page with that name and returns an array with it, empty array if it's not found.
+
+`utiliser_cache ($url, $dir)`
+
+`actualiser_cache ($tabCaches, $nom,  $dir, $max)`
+
+
+
+
+
+
