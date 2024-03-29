@@ -3,6 +3,8 @@
 Aura Leirós García\
 Os bos e xenerosos a nosa voz entenden.
 
+24 Marzo 2024
+
 
 ## SQL Introduction
 
@@ -62,7 +64,7 @@ This section is dedicated to explain the use of the third element in our SQL req
 
 ### Simple predicates
 
-The simple predicates are made using of mathematical connectors, Expression1 $\Theta$ Expresssion2 where $\Theta = {\lt, \le, =, \ge, \gt}$
+The simple predicates are made using of mathematical connectors, Expression1 $\Theta$ Expresssion2 where $\Theta \in \{\lt, \le, =, \neq, \gt, \ge \}$
 
 Some examples are `R.Name = 'J. Doe'`, `(S.Age + 30) >= 90` or `R.A = S.B`
 
@@ -170,9 +172,11 @@ Remember that this date follows LIBERTY AND DEMOCRACY conventions (pun intended,
 
 `DATEADD(datetimeField, addIntLong, dateAndTime)`
 
-2. Difference between two dates (if a it's after b the function will return a negative number)
+2. Difference between two dates
 
-`DATEDIFF(datetimeField, aDateAndTime, bDateAndTime)`
+`DATEDIFF(datetimeField, endDate, startDate)`
+
+The ``datetimeField`` is the parameter to specify the units (days, years, etc.), if the `endDate` is before the `startDate` the result will be a negative number.
 
 # End of this cours!
 
