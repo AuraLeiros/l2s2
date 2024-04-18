@@ -5,101 +5,198 @@
 #define BUF_SIZE 256
 
 
-
-
-
-
 Chaines* lectureChaine(FILE* f){
 
     // Vérification que le fichier passé en paramètre n'est pas NULL
     if (!f){
-        perror("Le fichier passé en parametre est NULL\n");
+        fprintf(stderr, "Le fichier passé en parametre est NULL\n");
         return NULL;
     }
     
     // Création et allocation mémoire d'une nouvelle chaîne.
     Chaines* newChaine = malloc(sizeof(Chaines));
     if (!newChaine){
-        perror("Erreur dans l'allocation mémoire de la chaine\n");
+        fprintf(stderr, "Erreur dans l'allocation mémoire de l'ensemble de chaines\n");
         return NULL;
     } 
 
     char* buffer = malloc(sizeof(char) * BUF_SIZE);
     if (!buffer){
-        perror("Erreur dans l'allocation mémoire du buffer\n");
-        free(newChaine);
+        fprintf(stderr, "Erreur dans l'allocation mémoire du buffer\n");
+        libererChaines(newChaine);
         return NULL;
     }
-    
-    // Lire les deux premières lignes.
+
     char* token = NULL;
+    char* separators = " \n";
 
-    for (int x=0; x<2; x++){
-        fgets(buffer, BUF_SIZE, f);
-        token = NULL;
-        token = strtok(buffer, " ");
-        token = strtok(NULL, " ");
-    
-        if (x == 0) {
-            newChaine->nbChaines = atoi(token);
-        } else {
-            newChaine->gamma = atoi(token);
-        }
-    }
-
-    newChaine->chaines = malloc(sizeof(CellChaine) * newChaine->nbChaines);
-    if (!newChaine->chaines){
-        perror("Erreur dans l'allocation mémoire de la liste de chaines\n");
+    // Lecture du nombre de chaines
+    if (!fgets(buffer, BUF_SIZE, f)){
+        fprintf(stderr, "Erreur dans la lecture du fichier\n");
+        libererChaines(newChaine);
         free(buffer);
-        free(newChaine);
         return NULL;
     }
 
-    // Variable auxiliaire pour faciliter la lisibilité du code.
-    CellChaine* chaine_aux = newChaine->chaines;
-    char* token_coor = NULL;
+    token = strtok(buffer, separators);
+    token = strtok(NULL, separators);
+    newChaine->nbChaines = atoi(token);
 
-    // Récuperer les chaines et le stocker dans la structure.
-    while (fgets(buffer, BUF_SIZE, f) != NULL){
+    // Lecture du gamma
+    if (!fgets(buffer, BUF_SIZE, f)){
+        fprintf(stderr, "Erreur dans la lecture du fichier\n");
+        libererChaines(newChaine);
+        free(buffer);
+        return NULL;
+    }
 
-        token = strtok(buffer, " ");
-        chaine_aux->numero = atoi(token);
-        token = strtok(NULL, " ");
+    token = strtok(NULL, separators);
+    token = strtok(NULL, separators);
+    newChaine->gamma = atoi(token);
 
-        chaine_aux->points = malloc(sizeof(CellPoint) * atoi(token));
-        if (!chaine_aux->points){
-            perror("Erreur dans l'allocation mémoire de la liste de points\n");
+    // Declaration des variables auxiliares au boucle de lecture des chaines
+    CellChaine* headChaine = NULL;
+    CellChaine* tailChaine = NULL;
+    CellChaine* newElem = NULL;
+    int numPoints = 0;
+
+    // Lecture des chaines
+    while (fgets(buffer, BUF_SIZE, f) != NULL) {
+    
+        // Allocation mémoire d'un nouveau élément.
+        newElem = malloc(sizeof(CellChaine));
+        if (!newElem){
+            fprintf(stderr, "Erreur dans l'allocation mémoire d'une liste de chaines\n");
+            libererCellChaine(headChaine);
+            libererChaines(newChaine);
             free(buffer);
-            free(chaine_aux);
-            free(newChaine);
             return NULL;
         }
 
-        CellPoint* point_aux = chaine_aux->points;
-        token_coor = NULL;
+        // Lecture du numéro de chaine et le nombre de points de la chaine.
+        token = strtok(buffer, separators);
+        newElem->numero = atoi(token);
 
-        while (token != NULL){
-            token = strtok(NULL, " ");
+        token = strtok(NULL, separators);
+        numPoints = atoi(token);
 
-            token_coor = strtok(token, ".");
-            point_aux->x = atoi(token_coor);
-            
-            token_coor = strtok(NULL, ".");
-            point_aux->y = atoi(token_coor);
+        CellPoint* headPoint = NULL;
+        CellPoint* tailPoint = NULL; 
+        CellPoint* newPoint = NULL;
+        
+        for (int x=0; x < numPoints; x++){
+            newPoint = malloc(sizeof(CellPoint));
+            if (!newPoint){
+                fprintf(stderr, "Erreur dans l'allocation mémoire d'un nouveau point\n");
+                libererCellChaine(headChaine);
+                libererCellChaine(newElem);                   
+                libererPoint(headPoint);
+                libererChaines(newChaine);
+                free(buffer);
+                return NULL;
+            }
 
-            point_aux = point_aux->suiv;        
+            // Avancer au prochain jeu de coordonnées.
+            token = strtok(NULL, separators);
+
+            if (sscanf(token, "%lf.%lf", &newPoint->x, &newPoint->y) != 2){
+                fprintf(stderr, "Erreur dans le parse des coordonées\n");
+                libererCellChaine(headChaine);
+                libererCellChaine(newElem);
+                libererPoint(headPoint);
+                libererPoint(newPoint);
+                libererChaines(newChaine);
+                free(buffer);
+                return NULL;            
+            }
+
+            if (!headPoint){
+                headPoint = newPoint;
+                tailPoint = headPoint;
+            } else {
+                tailPoint->suiv = newPoint;
+                tailPoint = tailPoint->suiv;      
+            }
+
+            newPoint->suiv = NULL;
         }
 
-        chaine_aux = chaine_aux->suiv;
-    }
+        newElem->points = headPoint;
 
-    // Nettoyer la mémoire et fermer le fichier avant fermer.
+        if (!headChaine){
+            headChaine = newElem;
+            tailChaine = headChaine;
+        } else {
+            tailChaine->suiv = newElem;
+            tailChaine = tailChaine->suiv;
+        }
+
+        newElem->suiv = NULL;
+    }
+    
+    newChaine->chaines = headChaine;
     free(buffer);
-    fclose(f);
 
     return newChaine;
-
 }
 
 
 
+// Fonction pour liberer une liste chainee de points.
+void libererPoint(CellPoint* point){
+
+    if (!point){
+        return;
+    }
+
+    CellPoint* curr = point;
+    CellPoint* next = NULL;
+
+    while(curr != NULL){
+        next = curr->suiv;
+        free(curr);
+        curr = next;
+    }
+
+    return;
+}
+
+// Fonction pour libérer une liste chainee de chaines.
+void libererCellChaine(CellChaine* chaine){
+
+    if (!chaine){
+        return;
+    }
+
+    CellChaine* curr = chaine;
+    CellChaine* next = NULL;
+
+    while(curr != NULL){
+        next = curr->suiv;
+        
+        if (curr->points != NULL){
+            libererPoint(curr->points);
+        }
+
+        free(curr);
+        curr = next;
+    }
+
+    return;
+}
+
+// Fonction pour libérer l'ensemble des chaînes
+void libererChaines(Chaines* chaine){
+
+    if (!chaine){
+        return;
+    }
+
+    if (chaine->chaines != NULL){
+        libererCellChaine(chaine->chaines);
+    }
+
+    free(chaine);
+
+    return;
+}

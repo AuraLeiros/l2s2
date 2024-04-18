@@ -28,4 +28,14 @@ void afficheChainesSVG(Chaines *C, char* nomInstance);
 double longueurTotale(Chaines *C);
 int comptePointsTotal(Chaines *C);
 
+
+// Fonction pour liberer une liste chainee de points.
+void libererPoint(CellPoint* point);
+
+// Fonction pour libérer une liste chainee de chaines.
+void libererCellChaine(CellChaine* chaine);
+
+// Fonction pour libérer l'ensemble des chaînes
+void libererChaines(Chaines* chaine);
+
 #endif
