@@ -1,0 +1,4 @@
+Chaines* lectureChaines(FILE *f)
+
+Edge-case, cuandoi nbchain o gamma sont menores o iguales a 0 return null, esto puede no funcionar si igualmente nos piden que el reseau este aunque vacio
+
