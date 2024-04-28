@@ -6,6 +6,8 @@
         "math.h": "c",
         "hachage.h": "c",
         "reseau_aux.h": "c",
-        "arbrequat.h": "c"
+        "arbrequat.h": "c",
+        "stdlib.h": "c",
+        "reseau.h": "c"
     }
 }

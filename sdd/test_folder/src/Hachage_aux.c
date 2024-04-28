@@ -1,7 +1,7 @@
-#include "Hachage.h"
-#include "Hachage_aux.h"
-#include "Reseau.h"
-#include "Reseau_aux.h"
+#include "../include/Hachage.h"
+#include "../include/Hachage_aux.h"
+#include "../include/Reseau.h"
+#include "../include/Reseau_aux.h"
 
 #include <stdio.h>
 
