@@ -4,40 +4,161 @@ Aura Leirós García
 
 ## Preface
 
-Before starting I would like to revisit the main concept of this course: the *data type*. 
+Before starting, we're going to revisit the main concept of this course, the *data type*.
 
-Defined as a classification of data that specifies the possibles values, the operations that can be performed on it and the way it is stored in memory, it's composed of two elements:
+*Data type* can be defined as the classification of data that specifies (to a compiler, to an interpreter) the possible values that a specific data can take, the operations that are performed on it and the way that it's stored in memory, it's composed of two elements:
 
 1. Abstract Data Type
 
-An Abstract Data Type (ADT) is a mathematical model for data, defined by its behavior from a user's perspective, this is, the potential values that the data can hold and the operations that can be performed on it, abstracting away from implementation details.
+An Abstract Data Type (ADT) is the mathematical definition of a data type, without any kind of implementation information. It's composed of the behavior from an user point of view, this is, potential values, the type of data that can hold and the operations that can be performed on it.
 
 ADT's are strictly theoretical concepts, analogous to the algebraic structures, which are caracterized for having a domain, a collection of operations and a set of constraints to satisfy.
 
 2. Data Structure
 
-Low-level, concrete implementation of the ADT's focusing on how data is organized in memory, with the main focus in improving efficiency.
+The data structure is the concrete implementation of an ADT focusing on how the data is organized into memory and with the main focus in improving efficiency.
 
 ## Introduction
 
-This lecture focuses on introducing the Priority Queue ADT and comparing its implemention using arrays and heaps.
+In this lecture we're going to focus into two ADTs, the Priority Queue and the binary tree.
 
-At the end of the course, we will continue with binary trees and begin to work with recursive functions involving them.
-
-## Priority queues
+## Priority Queues
 
 How can we easily find the minimum element of a dataset?
 
-A priority queue is an abstract data type in which every element is assigned a *priority* (key) that determines the order in which elements are served. Elements with higher priority are given precedence and in case of equal priorities, the FI-FO scheme is followed.
-
-The priority queue can be implemented using different structures.
-
----
-*Sorbonne's formal definition:
-
 A priority queue is an abstract data type that operates over a set of elements that satisfies a complete order.
 
+Every element is assigned a *priority* (a key) that determines the order, in case of equal priorities the FI-FO scheme is followed.
+
+
 ---
+### Interface
+
+Given a set of elements $F$ and an element $x$.
+
+The basic operations of a priority queue are:
+e
+1. Insert an element $\rightarrow$ `insert(F, x)`
+
+2. Return the element of F with the largest / smallest key $\rightarrow$ `max(F)` / `min(F)`
+
+3. Return and remove from F the element with the largest / smallest key $\rightarrow$ `extract_max(F)` / `extract_min(F)`
+---
+
+### Implementation - I
+
+#### Using arrays and linked lists
+
+It's indeed possible to use arrays and linked lists, but the resulting complexity is not good enough, as we can see in the following table.
+
+| Data Structure            | `insert(F, x)` | `min(F)` | `extract_min(F)`       |
+|---------------------------|-----------|----------|--------------|
+| Array         | $\Theta(1)$      | $\Theta(n)$      | $\Theta(min(F)) + \Theta(n)$ |
+| Linked List    | $\Theta(1)$       | $\Theta(n)$    |$\Theta(min(F)) + \Theta(1)$  |
+| Sorted Array | $\Theta(n)$       | $\Theta(1)$     | $\Theta(1)$          |
+| Sorted Linked List | $\Theta(n)$      | $\Theta(1)$     | $\Theta(1)$        |
+
+It's not necessary to memorize this table, but it's important to take a few minutes to check that you understand why.
+
+We're going to test a new ADT that could be useful to represent our priority queue, this is the heap.
+
+## Heap
+
+A representation of a priority queue can be made using a heap.
+
+A heap verifies that $S_0 = S \setminus x^*_S = S_1 \cup S_2$
+
+We're going to represent the heap as an ordered binary tree, that satisfies that all the nodes (except for the root) are bigger than their father.
+
+We're also going to add a restriction, the tree must leftist.
+
+Then, the height of the tree is going to be $\lfloor \log_2(n) \rfloor$
+
+### Implementation using arrays
+
+We observe that if we assign an index to every element in a leftist tree we have some interesting properties.
+
+1. `i(root) = 1`
+2. `i(left_son) = 2 * i(father)`
+3. `i(right_son) 2 * i(father) + 1` 
+4. `i(father) = floor(i(fils) / 2)`
+
+So we can represent them in an array!
+
+Two operations are needed to ensure the structure of a hep, mounting and descending a node if the value it's different than one of their kids.
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Trees
+
+A tree is a finite set $A$ of elements, related between them by a relation of parenthood that satisfies:
+
+1. $X$ is the father of $Y$ or $Y$ is the father of $X$.
+2. The root, $r$, is the only element without parent.
+3. $\forall x \in A \setminus r$, $x$ has only a parent.
+
+The elements of $A$ are called *nodes* 
+
+
+### Binary Trees
+
+A binary tree it's a 2-ary tree, defined recursively.
+
+A binary tree $A$ it's defined by:
+
+1. Base case: A binary tree is either empty $\empty$ or has a single node.
+2. $
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### Base operations
 

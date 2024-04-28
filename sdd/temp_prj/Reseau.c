@@ -1,6 +1,7 @@
 #include "Reseau.h"
 #include "Reseau_aux.h"
 #include "Chaine.h"
+#include "SVGwriter.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,7 +13,7 @@ Noeud* rechercheCreeNoeudListe(Reseau* R, double x, double y){
         return NULL;
     }
 
-    // Chercher le node sur la liste de nodes
+    // Chercher le node sur la liste de nodes.
     CellNoeud* idx = R->noeuds;
     while (idx != NULL){
 
@@ -32,8 +33,8 @@ Noeud* rechercheCreeNoeudListe(Reseau* R, double x, double y){
         return NULL;
     }
 
-    // Création et ajout d'un CellNoeud à notre réseau.
-    if ((creerAjouterCelluleNoeud(R, newNode)) != 0){
+    // Création d'un nouveau noued, sa cellule et ajout à notre réseau.
+    if ((creerAjouterCellNoeud_RS(R, newNode)) == NULL){
         fprintf(stderr, "Erreur dans la création et ajout d'une nouvelle cellule.\n");
         free(newNode);
         return NULL;
@@ -67,7 +68,7 @@ Reseau* reconstitueReseauListe(Chaines *C){
     while (chaine != NULL){
         
         // Traitement de la chaine (Noeuds + Commodités)
-        if ((chaineVersReseau(monReseau, (chaine->points))) != 0){
+        if ((traitementChaineRS(monReseau, (chaine->points))) != 0){
             fprintf(stderr, "Erreur dans le traitement de la chaine.\n");
             libererReseau(monReseau);
             return NULL;
@@ -123,4 +124,73 @@ int nbLiaisons(Reseau* R){
     }
     
     return res;
+}
+
+void ecrireReseau(Reseau* R, FILE* f){
+
+    if (!R || !f){
+        fprintf(stderr, "Erreur dans les paramétres.\n");
+        return;
+    }
+
+    // Calcul et ajout des 4 premieres lignes.
+    int liaisons = nbLiaisons(R);
+    int commodites = nbCommodites(R);
+
+    if ((liaisons <= 0) || ((R->gamma) <= 0) || ((R->nbNoeuds) <= 0) || (commodites <= 0)){
+        fprintf(stderr, "Erreur concernant les données du réseau.\n");
+        return;
+    } else if (fprintf(f, "NbNoeuds: %d\nNbLiaisons: %d\nNbCommodites: %d\nGamma: %d\n\n", R->nbNoeuds, liaisons, commodites, R->gamma) < 0){
+        fprintf(stderr, "Erreur lors de l'ajout des donnés au fichier.\n");
+        return;
+    }
+
+    // Printer les noeuds.
+    if (printNoeuds((R->noeuds), f) != 0){
+        fprintf(stderr, "Erreur lors du printage des noeuds dans le fichier.\n");
+        return;
+    }
+
+    // Printer les voisins.
+    if (printVoisins((R->noeuds), f) != 0){
+        fprintf(stderr, "Erreur lors du printage des voisins.\n");
+        return;
+    }
+
+    // Printer les commodités.
+    if (printCommodites((R->commodites), f) != 0){
+        fprintf(stderr, "Erreur lors du printage des commodités");
+        return;
+    }
+
+    return;
+}
+
+
+void afficheReseauSVG(Reseau *R, char* nomInstance){
+    CellNoeud *courN,*courv;
+    SVGwriter svg;
+    double maxx=0,maxy=0,minx=1e6,miny=1e6;
+
+    courN=R->noeuds;
+    while (courN!=NULL){
+        if (maxx<courN->nd->x) maxx=courN->nd->x;
+        if (maxy<courN->nd->y) maxy=courN->nd->y;
+        if (minx>courN->nd->x) minx=courN->nd->x;
+        if (miny>courN->nd->y) miny=courN->nd->y;
+        courN=courN->suiv;
+    }
+    SVGinit(&svg,nomInstance,500,500);
+    courN=R->noeuds;
+    while (courN!=NULL){
+        SVGpoint(&svg,500*(courN->nd->x-minx)/(maxx-minx),500*(courN->nd->y-miny)/(maxy-miny));
+        courv=courN->nd->voisins;
+        while (courv!=NULL){
+            if (courv->nd->num<courN->nd->num)
+                SVGline(&svg,500*(courv->nd->x-minx)/(maxx-minx),500*(courv->nd->y-miny)/(maxy-miny),500*(courN->nd->x-minx)/(maxx-minx),500*(courN->nd->y-miny)/(maxy-miny));
+            courv=courv->suiv;
+        }
+        courN=courN->suiv;
+    }
+    SVGfinalize(&svg);
 }

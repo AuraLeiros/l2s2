@@ -35,7 +35,7 @@ int lectureNombre(FILE *f, int* nbChain, int* gamma){
 CellChaine* lectureLigne(FILE* f){
 
     // Allocation mémoire d'une nouvelle chaîne.
-    CellChaine* myCC = malloc(sizeof(CellChaine));
+    CellChaine* myCC = calloc(1, sizeof(CellChaine));
     if (!myCC){
         fprintf(stderr, "Erreur dans l'allocation mémoire d'une cellchaine.\n");
         return NULL;
@@ -56,7 +56,7 @@ CellChaine* lectureLigne(FILE* f){
 
     for (int x=0; x < nbPoints; x++){
 
-        temp = malloc(sizeof(CellPoint));
+        temp = calloc(1, sizeof(CellPoint));
         if (!temp){
             fprintf(stderr, "Erreur dans l'allocation mémoire d'un CellPoint.\n");
             freeCellChaine(myCC);

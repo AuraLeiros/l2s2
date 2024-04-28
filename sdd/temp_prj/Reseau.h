@@ -11,7 +11,7 @@ typedef struct cellnoeud {
 } CellNoeud;
 
 /* Noeud du reseau */
-struct noeud {
+typedef struct noeud {
    int num;                        /* Numero du noeud */
    double x, y;                    /* Coordonnees du noeud*/
    CellNoeud *voisins;             /* Liste des voisins du noeud */
@@ -31,7 +31,10 @@ typedef struct {
     CellCommodite *commodites;      /* Liste des commodites a relier */
 } Reseau;
 
+/* Recherche un noeud avec les coordonnées données dans le réseau, le crée et l'ajoute s'il n'existe pas. */
 Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y);
+
+
 Reseau* reconstitueReseauListe(Chaines *C);
 void ecrireReseau(Reseau *R, FILE *f);
 int nbLiaisons(Reseau *R);

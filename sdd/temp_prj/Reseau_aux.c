@@ -1,12 +1,14 @@
 #include "Reseau.h"
 #include "Reseau_aux.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 
 /* --- --- --- --- --- --- --- --- */
 /*       Gestion des noeuds        */
 /* --- --- --- --- --- --- --- --- */
 
-/* Crée et initialise un noeud */
 Noeud* nouveauNoeud(int num, double x, double y){
     Noeud* newNode = malloc(sizeof(Noeud));
     if (!newNode){
@@ -22,8 +24,7 @@ Noeud* nouveauNoeud(int num, double x, double y){
     return newNode;
 }
 
-/* Crée une nouvelle CellNoeud et l'ajoute au réseau */
-CellNoeud* nouvelleCelluleNoeud(Noeud* nd){
+CellNoeud* nouveauCellNoeud(Noeud* nd){
     if (!nd){
         fprintf(stderr, "Le noeud passé en paramètre n'est pas valide.\n");
         return NULL;
@@ -41,8 +42,7 @@ CellNoeud* nouvelleCelluleNoeud(Noeud* nd){
     return newCell;
 }
 
-/* Ajoute une cellule à un réseau donné */
-int ajouterCelluleNoeud(Reseau* R, CellNoeud* cn){
+int ajouterCellNoeud_RS(Reseau* R, CellNoeud* cn){
     if (!R || !cn){
         fprintf(stderr, "Le réseau ou le CellNoeud passés en paramètre ne sont pas valides.\n");
         return -1;
@@ -55,22 +55,88 @@ int ajouterCelluleNoeud(Reseau* R, CellNoeud* cn){
     return 0;
 }
 
-/* Crée une nouvelle cellule et l'ajoute au réseau */
-int creerAjouterCelluleNoeud(Reseau* R, Noeud* nd){
+CellNoeud* creerAjouterCellNoeud_RS(Reseau* R, Noeud* nd){
     if (!R || !nd){
         fprintf(stderr, "Le réseau ou le noeud passés en paramètre ne sont pas valides.\n");
-        return -1;
+        return NULL;
     }
 
-    CellNoeud* maCellule = nouvelleCelluleNoeud(nd);
+    CellNoeud* maCellule = nouveauCellNoeud(nd);
     if (!maCellule){
-        fprintf(stderr, "Erreur lors de la création d'une nouvelle cellule");
-        return -1;
+        fprintf(stderr, "Erreur lors de la création d'une nouvelle cellule.\n");
+        return NULL;
     }
 
-    if ((ajouterCelluleNoeud(R, maCellule)) != 0){
+    if ((ajouterCellNoeud_RS(R, maCellule)) != 0){
         fprintf(stderr, "Erreur lors de l'ajout d'une cellule au réseau.\n");
         free(maCellule);
+        return NULL;
+    }
+
+    return maCellule;
+}
+
+void libererNoeud(Noeud* nd){
+    if (!nd){
+        return;
+    }
+
+    libererListeCellNoeuds(nd->voisins);
+    free(nd);
+
+    return;
+}
+
+void libererCellNoeud(CellNoeud* cn){
+    if (!cn){
+        return;
+    }
+
+    cn->nd = NULL;
+    cn->suiv = NULL;
+    free(cn);
+
+    return;
+}
+
+void libererListeCellNoeuds(CellNoeud* cn){
+    if (!cn) {
+        return;
+    }
+    
+    CellNoeud* idx = cn;
+    CellNoeud* temp = NULL;
+
+    while (idx != NULL){
+        temp = idx->suiv;
+        libererCellNoeud(idx);
+        idx = temp;
+    }
+
+    return;
+}
+
+int printNoeuds(CellNoeud* cn, FILE* f){
+    if (!cn || !f){
+        fprintf(stderr, "Erreur concernant un des paramètres.\n");
+        return -1;
+    }
+
+    CellNoeud* idx = cn;
+
+    // Iteration sur les noeuds et printage.
+    while (idx != NULL){
+        if (fprintf(f, "v %d %lf %lf\n",idx->nd->num, idx->nd->x, idx->nd->y) < 0){
+            fprintf(stderr, "Erreur lors de l'ajout d'un noeud au fichier.\n");
+            return -1;
+        }
+
+        idx = idx->suiv;
+    }
+
+    // Ajout d'un saut de ligne.
+    if (fprintf(f, "\n") < 0){
+        fprintf(stderr, "Erreur dans l'ajout d'un saut de ligne.\n");
         return -1;
     }
 
@@ -81,8 +147,6 @@ int creerAjouterCelluleNoeud(Reseau* R, Noeud* nd){
 /*      Gestion des commodites     */
 /* --- --- --- --- --- --- --- --- */
 
-
-/* Crée et initialise une commodite */
 CellCommodite* nouvelleCommodite(Noeud* a, Noeud* b){
     if (!a || !b){
         fprintf(stderr, "Problème lié aux noeuds passés en paramètre.\n");
@@ -102,7 +166,6 @@ CellCommodite* nouvelleCommodite(Noeud* a, Noeud* b){
     return maCommodite;
 }
 
-/* Ajoute une commodité en tête de liste d'une chaîne de commodités d'un réseau. */
 int ajouterCommodite(Reseau* R, CellCommodite* commodite){
 
     if (!R || !commodite){
@@ -116,7 +179,6 @@ int ajouterCommodite(Reseau* R, CellCommodite* commodite){
     return 0;
 }
 
-/* Crée et ajoute une commodité à un réseau existant */
 int creerAjouterCommodite(Reseau* R, Noeud* a, Noeud* b){
     if (!R || !a || !b){
         fprintf(stderr, "Erreur en relation aux arguments passés en paramètre.\n");
@@ -138,8 +200,6 @@ int creerAjouterCommodite(Reseau* R, Noeud* a, Noeud* b){
     return 0;
 }
 
-
-/* Libere une liste de commodites SANS liberer les nodes associés */
 void libererListeCommodites(CellCommodite* cc){
 
     if (!cc){
@@ -159,12 +219,31 @@ void libererListeCommodites(CellCommodite* cc){
 
 }
 
+int printCommodites(CellCommodite* cc, FILE* f){
+    if (!cc || !f){
+        fprintf(stderr, "Erreur liée aux paramètres.\n");
+        return -1;
+    }
+
+    CellCommodite* idx = cc;
+
+    while (idx != NULL){
+        if ((fprintf(f, "k %d %d\n", (idx->extrA->num), (idx->extrB->num))) < 0){
+            fprintf(stderr, "Erreur lors du printage d'une commodité.\n");
+            return -1;
+        }
+
+        idx = idx->suiv;
+    }
+
+    return 0;
+}
+
 /* --- --- --- --- --- --- --- --- */
 /*       Gestion d'un reseau       */
 /* --- --- --- --- --- --- --- --- */
 
 
-/* Crée et initialise un nouveau reseau */
 Reseau* nouveauReseau(){
     Reseau* newReseau = malloc(sizeof(Reseau));
     if (!newReseau){
@@ -180,8 +259,7 @@ Reseau* nouveauReseau(){
     return newReseau;
 }
 
-/* Traitement d'une chaine pour le ajouter à un réseau */
-int chaineVersReseau(Reseau* R, CellPoint* point){
+int traitementChaineRS(Reseau* R, CellPoint* point){
 
     // Vérification des paramètres.
     if (!R || !point){
@@ -257,12 +335,68 @@ void libererReseau(Reseau* R){
 
 }
 
+int testReseau(){
+
+    // Test des fonctions d'un réseau avec le fichier 00014_burma.res
+
+    // Ouverture du fichier.
+    FILE* f = fopen("00014_burma.cha", "r");
+    if (!f){
+        fprintf(stderr, "Erreur lors de l'ouverture du fichier.\n");
+        return -1;
+    }
+
+    // Lire le fichier.
+    Chaines* burma = lectureChaines(f);
+    if (!burma){
+        fprintf(stderr, "Erreur dans la lecture du fichier.\n");
+        fclose(f);
+        return -1;
+    }
+
+    // TEST 1 : Reconstituer le réseau
+    Reseau* burmaReseau = reconstitueReseauListe(burma);
+    if (!burma){
+        fprintf(stderr, "LE TEST 1 À ECHOUE.\n");
+        freeChaines(burma);
+        fclose(f);
+        return -1;
+    }
+
+    fprintf(stdout, "TEST 1 RÉUSSI.\n");
+
+    // TEST 2 : nbCommodites et nbLiaisons
+    int commodites = nbCommodites(burmaReseau);
+    int liaisons = nbLiaisons(burmaReseau);
+    if ((commodites != 8) || (liaisons != 15)){
+        fprintf(stderr, "LE TEST 2 À ECHOUE.\n\n");
+    }
+
+    fprintf(stdout, "nbCommodites:\n\nAttendues: 8\nObtenues:%d\n", commodites);
+    fprintf(stdout, "nbLiaisons:\n\nAttendues: 15\nObtenues:%d\n\n", liaisons);
+    fprintf(stdout, "TEST 2 RÉUSSI\n");
+
+    // TEST 3 : Écrire le réseau
+    FILE* testFile = fopen("testReseau.res", "w");
+    ecrireReseau(burmaReseau, testFile);
+    fprintf(stdout, "TEST 3: Veuillez vérifier le fichier testReseau.res\n");
+
+
+    fclose(f);
+    fclose(testFile);
+
+    freeChaines(burma);
+    libererReseau(burmaReseau);
+
+    return 0;
+}
+
+
 /* --- --- --- --- --- --- --- --- */
 /*       Gestion des voisins       */
 /* --- --- --- --- --- --- --- --- */
 
 
-/* Ajoute un noeud à la liste de voisins d'un autre s'il n'est pas encore présent. */
 int ajouterVoisin(Noeud* noeud_ou_inserer, Noeud* noeud_a_ajouter){
 
     if (!noeud_ou_inserer || !noeud_a_ajouter){
@@ -279,7 +413,7 @@ int ajouterVoisin(Noeud* noeud_ou_inserer, Noeud* noeud_a_ajouter){
         idx = idx->suiv;
     }
 
-    CellNoeud* newCellNoeud = nouvelleCelluleNoeud(noeud_a_ajouter);
+    CellNoeud* newCellNoeud = nouveauCellNoeud(noeud_a_ajouter);
     if (!newCellNoeud){
         fprintf(stderr, "Erreur dans la creation d'une nouvelle cellule.\n");
         return -1;
@@ -291,12 +425,7 @@ int ajouterVoisin(Noeud* noeud_ou_inserer, Noeud* noeud_a_ajouter){
     return 0;
 }
 
-
-
-
-
-/* Libere une liste de voisins SANS liberer les noeuds pointes et sans actualiser des autres listes de voisinage. */
-static void libererVoisins(CellNoeud* cnd){
+void libererVoisins(CellNoeud* cnd){
 
     if (!cnd){
         return;
@@ -314,12 +443,45 @@ static void libererVoisins(CellNoeud* cnd){
     return;
 }
 
+int printVoisins(CellNoeud* cn, FILE* f){
+    if (!cn || !f){
+        fprintf(stderr, "Erreur dans un des paramétres.\n");
+        return -1;
+    }
+
+    CellNoeud* idx = cn;
+    CellNoeud* voisins = NULL;
+
+    while (idx != NULL){
+        voisins = idx->nd->voisins;
+        while (voisins != NULL){
+            if ((voisins->nd->num) > (idx->nd->num)){
+                if (fprintf(f, "l %d %d\n", idx->nd->num, voisins->nd->num) < 0){
+                    fprintf(stderr, "Erreur dans le printage d'une liaison.\n");
+                    return -1;
+                }
+            }
+            voisins = voisins->suiv;
+        }
+        idx = idx->suiv;
+    }
+
+
+    // Faire une nouvelle ligne vide
+    if (fprintf(f, "\n") < 0){
+        fprintf(stderr, "Erreur lors de l'ajout d'un saut de ligne.\n");
+        return -1;
+    }
+
+
+    return 0;
+}
+
 
 /* --- --- --- --- --- --- --- --- */
 /*       ReconstitueReseau.c       */
 /* --- --- --- --- --- --- --- --- */
 
-/* Lecture du nom du fichier et de l'option choisie par l'utilisateur */
 int dataInput(char* file_name, int* selection, int maxSize){
 
     // Lecture du nom du fichier

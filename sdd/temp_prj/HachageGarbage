@@ -1,0 +1,27 @@
+TableHachage* nouvelleTableHachage(int nbNoeuds, double loadFactor){
+
+    // Allocation et initialisation mémoire d'une nouvelle table;
+    TableHachage* newTable = calloc(1, sizeof(TableHachage));
+    if (!newTable){
+        fprintf(stderr, "Erreur lors de l'allocation mémoire d'une nouvelle table de hachage.\n");
+        return NULL;
+    }
+
+    // Calcul de la taille de notre table.
+    newTable->taille = calcTaille(nbNoeuds, loadFactor);
+    if (newTable->taille == -1){
+        fprintf(stderr, "Erreur dans le calcul de la taille.\n");
+        free(newTable);
+        return NULL;
+    }
+
+    // Allocation mémoire pour les 'buckets'
+    newTable->T = calloc((newTable->taille), sizeof(CellNoeud*));
+    if (!newTable->T){
+        fprintf(stderr, "Erreur lors de l'allocation mémoire pour les noeuds de la table de hachage.\n");
+        free(newTable);
+        return NULL;
+    }
+
+    return newTable;
+}
