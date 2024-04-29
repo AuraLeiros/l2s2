@@ -1,13 +1,16 @@
 #ifndef __RESEAU_H__
 #define __RESEAU_H__
 
+#include <stdio.h>
 
+typedef struct chaines Chaines;
+typedef struct cellNoeud CellNoeud;
 typedef struct noeud Noeud;
 
 /* Liste chainee de noeuds (pour la liste des noeuds du reseau ET les listes des voisins de chaque noeud) */
-typedef struct cellnoeud {
+typedef struct cellNoeud {
     Noeud *nd;               /* Pointeur vers le noeud stock\'e */
-    struct cellnoeud *suiv;         /* Cellule suivante dans la liste */
+    CellNoeud *suiv;         /* Cellule suivante dans la liste */
 } CellNoeud;
 
 /* Noeud du reseau */
@@ -15,7 +18,7 @@ typedef struct noeud {
    int num;                        /* Numero du noeud */
    double x, y;                    /* Coordonnees du noeud*/
    CellNoeud *voisins;             /* Liste des voisins du noeud */
-};
+} Noeud;
 
 /* Liste chainee de commodites */
 typedef struct cellCommodite {
@@ -24,7 +27,7 @@ typedef struct cellCommodite {
 } CellCommodite;
 
 /* Un reseau */
-typedef struct {
+typedef struct reseau {
     int nbNoeuds;                   /* Nombre de noeuds du reseau */
     int gamma;                      /* Nombre maximal de fibres par cable */
     CellNoeud *noeuds;              /* Liste des noeuds du reseau */
@@ -33,12 +36,12 @@ typedef struct {
 
 /* Recherche un noeud avec les coordonnées données dans le réseau, le crée et l'ajoute s'il n'existe pas. */
 Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y);
-
-
 Reseau* reconstitueReseauListe(Chaines *C);
 void ecrireReseau(Reseau *R, FILE *f);
 int nbLiaisons(Reseau *R);
 int nbCommodites(Reseau *R);
 void afficheReseauSVG(Reseau *R, char* nomInstance);
+
+
 #endif
 

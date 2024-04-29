@@ -3,14 +3,13 @@
 
 #include <stdio.h>
 
-typedef struct cellPoint CellPoint;
-typedef struct cellChaine CellChaine;
-struct Chaines;
-
-typedef struct cellnoeud CellNoeud;
-typedef struct cellCommodite CellCommodite;
 typedef struct noeud Noeud;
-struct Reseau;
+typedef struct cellNoeud CellNoeud;
+typedef struct cellPoint CellPoint;
+typedef struct cellCommodite CellCommodite;
+typedef struct reseau Reseau;
+typedef struct chaines Chaines;
+
 /* --- --- --- --- --- --- --- --- */
 /*       Gestion des noeuds        */
 /* --- --- --- --- --- --- --- --- */
@@ -101,5 +100,3 @@ int dataInput(char* file_name, int* selection, int maxSize);
 
 
 #endif
-
-

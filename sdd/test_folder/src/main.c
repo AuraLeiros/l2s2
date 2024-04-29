@@ -1,6 +1,9 @@
 #include "../include/Chaine.h"
 #include "../include/Reseau.h"
 #include "../include/Reseau_aux.h"
+#include "../include/Hachage.h"
+#include "../include/Hachage_aux.h"
+
 
 #include <stdio.h>
 #include <time.h>
@@ -9,6 +12,8 @@
 static int testFile(int argc, char* argv);
 static void usage(char* argv);
 static Chaines* genererChainesFile(char* nom_fichier);
+static double calculChaines;
+static double calculHachage;
 
 int main(int argc, char* argv[]){
 
@@ -22,9 +27,16 @@ int main(int argc, char* argv[]){
         return -1;
     }
 
+    double calcChain = calculChaines(maChaine);
+    double calcHachage = calculHachage(maChaine);
+
+    printf("%lf %lf", calcChain, calcHachage);
+
+    return 0;
 
 
 
+    /*
 
     // Ouverture du fichier lecture
     FILE* fl = fopen(argv[1], "r");
@@ -44,13 +56,8 @@ int main(int argc, char* argv[]){
     // Écriture de une chaine.
     ecrireChaines(maChaine, fe);
 
-    clock_t debut, fin;
-    double temps_utilise;
+    */
 
-    if (!(genererChainesFile(argv[1]))){
-        fprintf(stderr, "Erreur dans la géneration des chaines.\n");
-        return -1;
-    }
 
     
 
@@ -101,11 +108,46 @@ static Chaines* genererChainesFile(char* nom_fichier){
     return maChaine;
 }   
 
-double calculChaines(Chaines* C){
+static double calculChaines(Chaines* C){
     
     Reseau* R = nouveauReseau();
     if (!R){
-        fprintf(stderr, "Erreur dans le ")
+        fprintf(stderr, "Erreur dans la création d'un nouveau réseau.\n");
+        return -1;
     }
+
+    clock_t debut, fin;
+    double temps_utilise;
+
+    debut = clock();
+    R = reconstitueReseauListe(C);
+    fin = clock();
+
+    libererReseau(R);
+
+    temps_utilise = ((double) (fin - debut)) / CLOCKS_PER_SEC;
+
+    return temps_utilise;
+
+}
+
+static double calculHachage(Chaines* C){
+
+
+    int points = comptePointsTotal(C);
+    int taille = calcTaille(points, 0.70);
+
+    Reseau* R = NULL;
+
+    clock_t debut, fin;
+    double temps_utilise;
+
+    debut = clock();
+    R = reconstitueReseauHachage(C, taille);
+    fin = clock();
+
+    temps_utilise = ((double) (fin - debut)) / CLOCKS_PER_SEC;
+
+    return temps_utilise;
 
 }

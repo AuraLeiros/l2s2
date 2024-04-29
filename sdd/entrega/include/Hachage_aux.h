@@ -1,8 +1,10 @@
 #ifndef __HACHAGE_AUX_H__
 #define __HACHAGE_AUX_H__
 
+
 typedef struct tablehachage TableHachage;
-typedef struct cellnoeud CellNoeud;
+typedef struct cellNoeud CellNoeud;
+typedef struct cellPoint CellPoint;
 typedef struct noeud Noeud;
 typedef struct reseau Reseau;
 
