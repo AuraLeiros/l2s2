@@ -163,19 +163,19 @@ int testGraphique(){
 
     Chaines* C = NULL;
 
-    FILE* liste = fopen("RES1.txt", "w");
+    FILE* liste = fopen("../output/graphique_liste", "w");
     if (!liste){
         fprintf(stderr, "Erreur dans la création du fichier pour la liste chainée.\n");
         return -1;
     }
 
-    FILE* hachage = fopen("graphique_table", "w");
+    FILE* hachage = fopen("../output/graphique_hachage", "w");
     if (!hachage){
         fprintf(stderr, "Erreur dans la création du fichier pour la table de hachage.\n");
         return -1;
     }
 
-    FILE* arbre = fopen("graphique_arbre", "w");
+    FILE* arbre = fopen("../output/graphique_arbre", "w");
     if (!arbre){
         fprintf(stderr, "Erreur dans la création du fichier pour la liste chainée.\n");
         return -1;
@@ -189,7 +189,7 @@ int testGraphique(){
     double data = 0.0;
     double load = 0.10;
 
-    while (nbChaines <= 2000){
+    while (nbChaines <= 5000){
 
         C = generationAleatoire(nbChaines, nbPointsChaine, xmax, ymax);
 

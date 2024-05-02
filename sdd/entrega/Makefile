@@ -13,7 +13,7 @@ Main.o : src/Main.c include/Hachage_aux.h include/Hachage.h include/Reseau.h inc
 Test.o : src/Test.c include/Test.h include/Hachage_aux.h include/Hachage.h include/Reseau.h include/Reseau_aux.h include/Chaine.h include/ArbreQuat.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-ArbreQuat.o : src/ArbreQuat.c include/ArbreQuat.h  include/ArbreQuat_aux.h include/Reseau.h include/Reseau_aux.h include/Chaine.h
+ArbreQuat.o : src/ArbreQuat.c include/ArbreQuat.h include/ArbreQuat_aux.h include/Reseau.h include/Reseau_aux.h include/Chaine.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 ArbreQuat_aux.o : src/ArbreQuat_aux.c include/ArbreQuat_aux.h include/Reseau.h include/Reseau_aux.h include/Chaine.h

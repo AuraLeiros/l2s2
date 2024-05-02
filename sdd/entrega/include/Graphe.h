@@ -30,8 +30,15 @@ typedef struct graphe {
     Sommet** T_som;
     int gamma;
     int nbcommod;
-    Commod* T_Commod;
+    Commod** T_Commod;
 } Graphe;
+
+
+
+Graphe* creerGraphe(Reseau* R);
+
+int cheminPlusCourt(Graphe* G, int u, int v);
+
 
 #endif
 

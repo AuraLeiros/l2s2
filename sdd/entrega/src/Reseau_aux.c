@@ -337,30 +337,30 @@ void libererReseau(Reseau* R){
 
 }
 
-int testReseau(){
+int testReseau(char* file_name){
 
-    // Test des fonctions d'un réseau avec le fichier 00014_burma.res
+    // Test des fonctions d'un réseau
 
     // Ouverture du fichier.
-    FILE* f = fopen("00014_burma.cha", "r");
+    FILE* f = fopen(file_name, "r");
     if (!f){
         fprintf(stderr, "Erreur lors de l'ouverture du fichier.\n");
         return -1;
     }
 
     // Lire le fichier.
-    Chaines* burma = lectureChaines(f);
-    if (!burma){
+    Chaines* chaineTest = lectureChaines(f);
+    if (!chaineTest){
         fprintf(stderr, "Erreur dans la lecture du fichier.\n");
         fclose(f);
         return -1;
     }
 
     // TEST 1 : Reconstituer le réseau
-    Reseau* burmaReseau = reconstitueReseauListe(burma);
-    if (!burma){
+    Reseau* chaineTestReseau = reconstitueReseauListe(chaineTest);
+    if (!chaineTest){
         fprintf(stderr, "LE TEST 1 À ECHOUE.\n");
-        freeChaines(burma);
+        freeChaines(chaineTest);
         fclose(f);
         return -1;
     }
@@ -368,27 +368,28 @@ int testReseau(){
     fprintf(stdout, "TEST 1 RÉUSSI.\n");
 
     // TEST 2 : nbCommodites et nbLiaisons
-    int commodites = nbCommodites(burmaReseau);
-    int liaisons = nbLiaisons(burmaReseau);
+    int commodites = nbCommodites(chaineTestReseau);
+    int liaisons = nbLiaisons(chaineTestReseau);
     if ((commodites != 8) || (liaisons != 15)){
         fprintf(stderr, "LE TEST 2 À ECHOUE.\n\n");
     }
 
-    fprintf(stdout, "nbCommodites:\n\nAttendues: 8\nObtenues:%d\n", commodites);
-    fprintf(stdout, "nbLiaisons:\n\nAttendues: 15\nObtenues:%d\n\n", liaisons);
+    fprintf(stdout, "nbCommodites: %d\n", commodites);
+    fprintf(stdout, "nbLiaisons: %d", liaisons);
     fprintf(stdout, "TEST 2 RÉUSSI\n");
 
     // TEST 3 : Écrire le réseau
     FILE* testFile = fopen("testReseau.res", "w");
-    ecrireReseau(burmaReseau, testFile);
+    ecrireReseau(chaineTestReseau, testFile);
     fprintf(stdout, "TEST 3: Veuillez vérifier le fichier testReseau.res\n");
 
+    afficheReseauSVG(chaineTestReseau, "svgtest");
 
     fclose(f);
     fclose(testFile);
 
-    freeChaines(burma);
-    libererReseau(burmaReseau);
+    freeChaines(chaineTest);
+    libererReseau(chaineTestReseau);
 
     return 0;
 }

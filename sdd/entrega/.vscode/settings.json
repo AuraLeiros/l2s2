@@ -2,6 +2,8 @@
     "files.associations": {
         "time.h": "c",
         "unistd.h": "c",
-        "chaine.h": "c"
+        "chaine.h": "c",
+        "graphe_aux.h": "c",
+        "common.h": "c"
     }
 }

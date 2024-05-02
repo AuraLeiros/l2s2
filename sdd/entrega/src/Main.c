@@ -31,7 +31,7 @@ int main(int argc, char* argv[]){
         return -1;
     }
 
-    FILE* res = fopen("test_res", "w");
+    FILE* res = fopen("../output/res", "w");
     if (!res){
         freeChaines(maChaine);
         return -1;
@@ -65,7 +65,8 @@ int main(int argc, char* argv[]){
         idx += 0.10;
     }
     
-    testGraphique();
+    // Commente car prend plusieurs minutes pour s'executer.
+    //testGraphique();
 
     fclose(res);
     freeChaines(maChaine);    
