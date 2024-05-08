@@ -64,7 +64,7 @@ Properties:
 
 ## Complexity: Is my algorithm a complexity disaster?!
 
-This section comes back to develop the concept of temporal complexity
+This section comes back to develop the concept of temporal complexity.
 
 
 
