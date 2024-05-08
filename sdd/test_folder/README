@@ -1,0 +1,19 @@
+
+
+
+
+For the key function
+
+- The given function does not work, because it's mathematically designed to work with > 0 int
+- Instead of proposing otherwise, we're adapting the function
+- We're assuming that all the coordinates are less than 999 to skip overflow. and that the coordinates only have 2 decimal points to do not have to use long long and such.
+
+
+Pour la fonction de hachage
+
+La fonction clef donné ne me parait pas appropié car ne retourne pas des entiers, fonction cantor designee uniquement pour non negative entiers du coup on va faire une petite modification pour l'adecuer à notre programme qui prend des doubles
+
+Chaines* lectureChaines(FILE *f)
+
+Edge-case, cuandoi nbchain o gamma sont menores o iguales a 0 return null, esto puede no funcionar si igualmente nos piden que el reseau este aunque vacio
+
